@@ -5,14 +5,19 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('gameliga:server');
+var debug = require('debug')('back-liga-dev:server');
 var http = require('http');
+const path = require('path')
+
+require('dotenv').config({
+    path: process.env.NODE_ENV === 'test' ? path.resolve(__dirname,'../../.env.testing') : path.resolve(__dirname,'../../.env')
+})
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT ? process.env.PORT : '3000' );
 app.set('port', port);
 
 /**
