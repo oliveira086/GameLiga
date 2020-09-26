@@ -1,9 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
+const loginController = require('../controllers/loginController.js');
+
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+
+router.post('/login',loginController.login )
 
 module.exports = router;
