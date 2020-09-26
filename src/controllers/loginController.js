@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt-nodejs');
 module.exports = {
 
     async login(req, res, next) {
+        console.log('ok')
         try {
 
             const userExist = await Users.findOne({
@@ -17,18 +18,20 @@ module.exports = {
                 res.status(400).json({error: 'email not exists'})
             }
             else {
-                if (await bcrypt.compare(req.body.senha, userExist.senha))
-                {
-                    const dateNow = new Date
-                    userExist.last_login = dateNow.toISOString()
-                    userExist.save()
-                    const token = generateToken(userExist.email)
-                    res.status(200)
-                    res.json({token});
-                }
-                else {
-                    res.status(400).json({error: 'invalid password'})
-                }
+                bcrypt.compare(req.body.senha, userExist.senha, function(err, result) {
+                    let resposta = result
+                    if (resposta) {
+                        const dateNow = new Date
+                        userExist.last_login = dateNow.toISOString()
+                        userExist.save()
+                        const token = generateToken(userExist.email)
+                        res.status(200)
+                        res.json({token});
+                    }
+                    else {
+                        res.status(400).json({error: 'invalid password'})
+                    }
+                });
             }
         } catch (error) {
             console.log(error)

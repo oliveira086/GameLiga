@@ -37,8 +37,15 @@ module.exports = {
             if (userExist[0]) {
                 res.status(400).json({error: 'email already exists'})
             } else {
-                const salt = await bcrypt.genSalt(10)
-                req.body.senha = bcrypt.hashSync(req.body.senha, salt);
+                
+                const salt = bcrypt.genSaltSync(10);
+                const hash = bcrypt.hashSync(req.body.senha, salt);
+
+                req.body.senha = hash
+                
+
+                console.log(req.body)
+                
                 const user = await Users.create(req.body);
                 const token = generateToken(user.email);
                 res.status(201);
