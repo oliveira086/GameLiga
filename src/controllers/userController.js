@@ -1,6 +1,7 @@
 const { sequelize, Users } = require('../models');
 const generateToken = require('../functions/generateToken');
 const bcrypt = require('bcrypt-nodejs');
+const auth = require('../middlewares/auth')
 
 module.exports = {
     async getUser(req, res, next) {

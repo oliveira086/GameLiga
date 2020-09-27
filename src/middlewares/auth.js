@@ -5,7 +5,7 @@ module.exports = (req,res,next) => {
     if(!token) {
         return res.status(401).json({error: 'token not declared'})
     }
-    jwt.verify(token,process.env.SECRET_KEY, (error,decoded)=> {
+    jwt.verify(token, process.env.SECRET_KEY, (error,decoded)=> {
         if(error){
             return res.status(401).json({error: 'token invalid'})
         }
