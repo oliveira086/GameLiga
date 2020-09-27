@@ -78,26 +78,23 @@ module.exports = {
 
             if(user != null){
                 const transferencias = await Transferencias.findAll({
+                    include: [
+                        {
+                          model: Users,
+                          as: 'users',
+                          required: false,
+                          limit: 5,
+                          order: sequelize.literal('id DESC'), 
+                        }
+                    ],
                     where: {
                         users_deb: user.id
                     }
                 })
-
-                let user_deb = await Users.findByPk(transferencias.user_deb)
-                let user_cred = await Users.findByPk(transferencias.user_cred)
-
-                let resposta = {
-                    createdAt: transferencias.createdAt,
-                    id: transferencias.id,
-                    updatedAt: transferencias.updatedAt,
-                    users_cred: user_cred,
-                    users_deb: user_deb,
-                    valor: transferencias.valor,
-                }
-
+                
                 res.status(200);
                 res.json({
-                    resposta
+                    transferencias
                 });
             }
         } catch (error) {
