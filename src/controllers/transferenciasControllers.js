@@ -82,6 +82,19 @@ module.exports = {
                         users_deb: user.id
                     }
                 })
+
+                let user_deb = Users.findPk(transferencias.user_deb)
+                let user_cred = Users.findPk(transferencias.user_cred)
+
+                let resposta = {
+                    createdAt: transferencias.createdAt,
+                    id: transferencias.id,
+                    updatedAt: transferencias.updatedAt,
+                    users_cred: user_cred,
+                    users_deb: user_deb,
+                    valor: transferencias.valor,
+                }
+
                 res.status(200);
                 res.json({
                     transferencias
