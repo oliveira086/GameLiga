@@ -27,7 +27,7 @@ module.exports = {
             if(user != null){ 
                 const atividades = await Atividades.findAll({
                     where: {
-                        estados_id: 2
+                        estados_id: 3
                     }
                 })
                 console.log(atividades)
