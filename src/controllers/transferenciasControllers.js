@@ -32,8 +32,8 @@ module.exports = {
 
                 const transferenciaRealizada = await Transferencias.create(data)
 
-                let user_deb = Users.findPk(transferenciaRealizada.user_deb)
-                let user_cred = Users.findPk(transferenciaRealizada.user_cred)
+                let user_deb = Users.findByPk(transferenciaRealizada.user_deb)
+                let user_cred = Users.findByPk(transferenciaRealizada.user_cred)
 
                 let resposta = {
                     createdAt: transferenciaRealizada.createdAt,
