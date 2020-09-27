@@ -5,7 +5,8 @@ const auth = require('../middlewares/auth')
 
 module.exports = {
     async getUser(req, res, next) {
-        auth()
+        const emailTeste = auth(req,res,next)
+        console.log(`TENTANDO ${emailTeste}`)
         try {
             const user = await Users.findOne({
                 where:{
