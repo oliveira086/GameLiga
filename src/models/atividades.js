@@ -25,8 +25,8 @@ const Atividades = (sequelize, DataTypes) => {
       }
     )
     atividades.associate = (models) => {
-        publicatorUser.belongsTo(models.Users, { foreignKey: 'user_id', as: 'usuario' })
-        publicatorUser.belongsTo(models.Estados, {foreignKey: 'estados_id', as: 'estados'})
+        atividades.belongsTo(models.Users, { foreignKey: 'user_id', as: 'usuario' })
+        atividades.belongsTo(models.Estados, {foreignKey: 'estados_id', as: 'estados'})
     };
     return atividades;
   }

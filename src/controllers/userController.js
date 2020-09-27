@@ -23,7 +23,7 @@ module.exports = {
                 where:{
                     email: req.email
                 },
-                // attributes: ['nome', 'saldo', 'super_user']
+                // attributes: ['nome', 'saldo']
             })
             if(user != null){ 
                 res.status(200).json(user);
