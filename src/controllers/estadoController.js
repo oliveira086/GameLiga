@@ -39,6 +39,7 @@ module.exports = {
 
     async createEstado(req, res, next) {
         try {
+            console.log(req.body)
             const token = req.body.token;
             if(!token) {
                 res.status(401).json({error: 'token not declared'})
