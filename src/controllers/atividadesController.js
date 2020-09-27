@@ -1,7 +1,12 @@
 const { sequelize, Atividades, Users} = require('../models');
 const jwt = require('jsonwebtoken')
 
-const Trello = require('trello-node-api')(process.env.TRELLO_API_KEY, process.env.TRELLO_TOKEN)
+let trelloApi = process.env.TRELLO_API_KEY
+let trelloToken = process.env.TRELLO_TOKEN
+
+console.log(trelloApi)
+
+const Trello = require('../../node_modules/trello-node-api')(process.env.TRELLO_API_KEY, process.env.TRELLO_TOKEN)
 
 
 module.exports = {
@@ -90,7 +95,7 @@ module.exports = {
                     }).catch(function (error) {
                         console.log('error', error);
                     });
-                    
+
                     res.status(200);
                     res.json({
                         atividadeCriada
