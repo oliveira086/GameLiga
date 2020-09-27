@@ -1,25 +1,33 @@
 const { sequelize, Users } = require('../models');
 const generateToken = require('../functions/generateToken');
 const bcrypt = require('bcrypt-nodejs');
+const jwt = require('jsonwebtoken')
 const auth = require('../middlewares/auth')
 
 module.exports = {
     async getUser(req, res, next) {
         try {
-            await auth(req, res, next);
+
+            const token = req.body.token;
+            if(!token) {
+                return res.status(401).json({error: 'token not declared'})
+            }
+            jwt.verify(token,process.env.SECRET_KEY, (error,decoded)=> {
+                if(error){
+                    return res.status(401).json({error: 'token invalid'})
+                }
+                req.email = decoded.email
+                return next()
+            })
+
             const user = await Users.findOne({
                 where:{
                     email: req.email
                 },
                 attributes: ['nome', 'saldo']
             })
-            if(user != null){
-                if(!res.headersSent){
-                    res.json(user)
-                    // res.status(200).json(user);
-                }
-                // res.status(200).json(user);
-                // res.send(user)
+            if(user != null){ 
+                res.status(200).json(user);
             } else {
                 res.status(400).json({ error: 'user not found' });
                 res.send(user)
