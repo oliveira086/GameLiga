@@ -61,18 +61,20 @@ module.exports = {
                 attributes: ['id']
             })
 
-            if(user != null){
-                const transferencias = await Transferencias.findAll({
-                    where: {
-                        // [Op.or]: [{users_cred: user.id}, {users_deb: user.id}]
-                        users_deb: user.id
-                    }
-                })
-                res.status(200);
-                res.json({
-                    transferencias
-                });
-            }
+            res.status(200).json(user)
+
+            // if(user != null){
+            //     const transferencias = await Transferencias.findAll({
+            //         where: {
+            //             // [Op.or]: [{users_cred: user.id}, {users_deb: user.id}]
+            //             users_deb: user.id
+            //         }
+            //     })
+            //     res.status(200);
+            //     res.json({
+            //         transferencias
+            //     });
+            // }
         } catch (error) {
             console.log(error)
             res.status(500);
