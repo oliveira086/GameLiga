@@ -69,8 +69,14 @@ module.exports = {
                 if (estadoExist.length != 0) {
                     res.status(400).json({error: 'estado already exists'})
                 } else {
-    
-                    const atividadeCriada = await Atividades.create(req.body);
+                    let data = {
+                        nome: req.body.nome,
+                        valor: req.body.valor,
+                        valor_inicio: req.body.valor_inicio,
+                        valor_final: req.body.valor_final,
+                        estado_id: req.body.estado_id
+                    }
+                    const atividadeCriada = await Atividades.create(data);
                     res.status(200);
                     res.json({
                         atividadeCriada
