@@ -1,6 +1,8 @@
 const { sequelize, Atividades, Users} = require('../models');
 const jwt = require('jsonwebtoken')
 
+const Trello = require('trello-node-api')(process.env.TRELLO_API_KEY, process.env.TRELLO_TOKEN)
+
 
 module.exports = {
     async getAtividades(req, res, next) {
@@ -57,8 +59,6 @@ module.exports = {
                 attributes: ['nome']
             })
 
-            console.log(user)
-
             if(user != null){
 
                 const estadoExist = await Atividades.findAll({
@@ -77,6 +77,20 @@ module.exports = {
                         estados_id: req.body.estados_id
                     }
                     const atividadeCriada = await Atividades.create(data);
+
+                    var trelloCard = {
+                        name: req.body.nome,
+                        desc: 'Atualizar',
+                        pos: 'top',
+                        idList: process.env.TRELLO_INIT_LIST, //REQUIRED
+                    };
+
+                    Trello.card.create(trelloCard).then(function (response) {
+                        console.log('response ', response);
+                    }).catch(function (error) {
+                        console.log('error', error);
+                    });
+                    
                     res.status(200);
                     res.json({
                         atividadeCriada
