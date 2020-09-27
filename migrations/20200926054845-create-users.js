@@ -9,6 +9,10 @@ module.exports = {
         autoIncrement: true,
         allowNull: true
       },
+      id_trello: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
       nome: {
         type: Sequelize.STRING,
         allowNull: false

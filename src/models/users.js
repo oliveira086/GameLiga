@@ -2,6 +2,10 @@ const Users = (sequelize, DataTypes) => {
     let users = sequelize.define(
       'Users',
       {
+        id_trello: {
+          type: DataTypes.STRING,
+          allowNull: true,
+        },
         nome: {
           type: DataTypes.STRING,
           allowNull: false
