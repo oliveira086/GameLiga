@@ -5,6 +5,10 @@ const Estados = (sequelize, DataTypes) => {
         nome: {
           type: DataTypes.STRING,
           allowNull: false
+        },
+        visivel: {
+            type: DataTypes.INTEGER,
+            allowNull: false
         }
       },
       {
