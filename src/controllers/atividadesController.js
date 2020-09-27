@@ -27,10 +27,10 @@ module.exports = {
             if(user != null){ 
                 const atividades = await Atividades.findAll({
                     where: {
-                        estados_id: 3
+                        estados_id: 3,
+                        users_id: null
                     }
                 })
-                console.log(atividades)
                 res.status(200).json(atividades);
             } else {
                 res.status(400).json({ error: 'user not found' });
