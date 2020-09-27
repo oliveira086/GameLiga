@@ -15,8 +15,10 @@ module.exports = {
             })
             if(user != null){
                 res.status(200).json(user);
+                return next([err])
             } else {
                 res.status(400).json({ error: 'user not found' });
+                return next([err])
             }
         }
         catch (error) {
