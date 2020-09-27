@@ -83,8 +83,8 @@ module.exports = {
                     }
                 })
 
-                let user_deb = Users.findPk(transferencias.user_deb)
-                let user_cred = Users.findPk(transferencias.user_cred)
+                let user_deb = await Users.findByPk(transferencias.user_deb)
+                let user_cred = await Users.findByPk(transferencias.user_cred)
 
                 let resposta = {
                     createdAt: transferencias.createdAt,
@@ -97,7 +97,7 @@ module.exports = {
 
                 res.status(200);
                 res.json({
-                    transferencias
+                    resposta
                 });
             }
         } catch (error) {
