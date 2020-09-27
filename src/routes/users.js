@@ -5,5 +5,6 @@ const usuarioController = require('../controllers/userController')
 /* GET users listing. */
 router.post('/cadastro', usuarioController.createUser);
 router.post('/getUser', usuarioController.getUser);
+router.post('/getUserWithEmail', usuarioController.getUserWithEmail)
 
 module.exports = router;
