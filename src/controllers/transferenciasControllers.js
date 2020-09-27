@@ -29,6 +29,8 @@ module.exports = {
                     users_deb: req.body.users_deb,
                     valor: req.body.valor
                 }
+
+                console.log(data)
                 const transferenciaRealizada = await Transferencias.create(data)
                 res.status(200);
                 res.json({
