@@ -234,11 +234,6 @@ module.exports = {
                      console.log('error', error);
                 });
                 
-                
-
-                
-
-                
             } else {
                 res.status(400).json({ error: 'user not found' });
             }
