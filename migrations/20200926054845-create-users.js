@@ -29,6 +29,10 @@ module.exports = {
           type: Sequelize.INTEGER(4),
           allowNull: false
       },
+      superUser: {
+        type: Sequelize.INTEGER(4),
+        allowNull: false
+      },
       created_at: {
         type: Sequelize.DATE(6),
         allowNull: true

@@ -21,6 +21,10 @@ const Users = (sequelize, DataTypes) => {
         saldo: {
             type: DataTypes.INTEGER(6),
             allowNull: false
+        },
+        superUser: {
+          type: DataTypes.INTEGER(4),
+          allowNull: false
         }
       },
       {
