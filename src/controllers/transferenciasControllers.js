@@ -65,8 +65,8 @@ module.exports = {
             if(user != null){
                 const transferencias = await Transferencias.findAll({
                     where: {
-                        [Op.or]: [{users_cred: user.id}, {users_deb: user.id}]
-                        // users_deb: user.id
+                        // [Op.or]: [{users_cred: user.id}, {users_deb: user.id}]
+                        users_deb: user.id
                     }
                 })
                 res.status(200);
