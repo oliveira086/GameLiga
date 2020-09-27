@@ -32,7 +32,21 @@ module.exports = {
       updated_at: {
         type: Sequelize.DATE(6),
         allowNull: true
-      }
+      },
+      user_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: { model: 'users', key: 'id'},
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      estados_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: { model: 'atividades', key: 'id'},
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
     })
   },
 

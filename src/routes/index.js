@@ -13,7 +13,8 @@ router.post('/getEstados', estadoController.getEstado)
 router.post('/createEstados', estadoController.createEstado)
 router.post('/deleteEstados', estadoController.deleteEstado)
 
-router.post('/getAtividades', atividadesController.getAtividades )
+router.post('/getAtividades', atividadesController.getAtividades)
+router.post('/createAtividades', atividadesController.createAtividade)
 
 router.post('/login',loginController.login)
 
