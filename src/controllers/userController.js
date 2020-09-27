@@ -9,6 +9,7 @@ module.exports = {
         try {
 
             const token = req.body.token;
+            console.log('FOOOI' + token)
             if(!token) {
                 res.status(401).json({error: 'token not declared'})
             }
