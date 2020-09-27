@@ -13,8 +13,7 @@ module.exports = {
                 },
                 attributes: ['nome', 'saldo']
             })
-            console.log('FOOOi' + JSON.stringify(user))
-            if(user.id != null){
+            if(user != null){
                 return res.status(200).json(user);
             } else {
             return res.status(400).json({ error: 'user not found' });
