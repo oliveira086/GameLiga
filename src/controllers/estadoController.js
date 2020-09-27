@@ -39,7 +39,6 @@ module.exports = {
 
     async createEstado(req, res, next) {
         try {
-            console.log(req.body)
             const token = req.body.token;
             if(!token) {
                 res.status(401).json({error: 'token not declared'})
@@ -83,27 +82,47 @@ module.exports = {
         }
     },
 
-    // async deleteUser(req, res, next) {
-    //     try {
-    //         const { id } = req.params
+    async deleteEstado(req, res, next) {
+        try {
+            const token = req.body.token;
+            if(!token) {
+                res.status(401).json({error: 'token not declared'})
+            }
+            jwt.verify(token, process.env.SECRET_KEY, (error,decoded)=> {
+                if(error){
+                    res.status(401).json({error: 'token invalid'})
+                }
+                req.email = decoded.email
+            })
 
-    //         const userDeleted = await Users.destroy({
-    //             where: {
-    //                 id
-    //             }
-    //         });
+            const user = await Users.findOne({
+                where:{
+                    email: req.email
+                },
+                attributes: ['nome']
+            })
 
-    //         if (userDeleted) {
-    //             res.status(200);
-    //             res.json('user deleted');
-    //         } else {
-    //             res.status(404);
-    //             res.json({error: 'user not found'});
-    //         }
-    //     } catch (error) {
-    //         console.log(error)
-    //         res.status(500);
-    //         res.json({error: 'internal error'});
-    //     }
-    // },
+            if(user != null){
+
+                const {id} = req.body
+                const propsForUpate = Object.keys(req.body)
+
+                const estados = await Estados.update(req.body, {
+                    where: {
+                        id
+                    }
+                });
+
+                if (estados[0]) {
+                    res.status(200).json(`estado updated: ${propsForUpate}`)
+                } else {
+                    res.status(500).json({error: 'estado not found'})
+                }
+            }
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({error: 'internal error'})
+        }
+    },
+
 }

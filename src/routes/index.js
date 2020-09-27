@@ -10,6 +10,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/getEstados', estadoController.getEstado)
 router.post('/createEstados', estadoController.createEstado)
+router.post('/deleteEstado', estadoController.deleteEstado)
 
 router.post('/login',loginController.login)
 
