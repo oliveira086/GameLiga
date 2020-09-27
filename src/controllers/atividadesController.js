@@ -73,15 +73,6 @@ module.exports = {
                 if (estadoExist.length != 0) {
                     res.status(400).json({error: 'estado already exists'})
                 } else {
-                    let data = {
-                        nome: req.body.nome,
-                        valor: req.body.valor,
-                        valor_inicio: req.body.valor_inicio,
-                        valor_final: req.body.valor_final,
-                        estados_id: req.body.estados_id,
-                        entrega: req.body.entrega
-                    }
-                    const atividadeCriada = await Atividades.create(data);
 
                     var trelloCard = {
                         name: req.body.nome,
@@ -94,13 +85,22 @@ module.exports = {
 
                     Trello.card.create(trelloCard).then(function (response) {
                         console.log('response ', response);
+                        let data = {
+                            nome: req.body.nome,
+                            valor: req.body.valor,
+                            valor_inicio: req.body.valor_inicio,
+                            valor_final: req.body.valor_final,
+                            estados_id: req.body.estados_id,
+                            entrega: req.body.entrega,
+                            trello_id: response.idCard
+                        }
+                        const atividadeCriada = await Atividades.create(data);
+                        res.status(200);
+                        res.json({
+                            atividadeCriada
+                        });
                     }).catch(function (error) {
                         console.log('error', error);
-                    });
-
-                    res.status(200);
-                    res.json({
-                        atividadeCriada
                     });
                 }
             } 
@@ -209,14 +209,14 @@ module.exports = {
                 },
                 attributes: ['nome']
             })
-            if(user != null){ 
+            if(user != null){
+                
                 let data = {
                     nome: req.body.nome,
                     valor: req.body.valor,
                     valor_inicio: req.bodyvalor_inicio,
                     valor_final: req.bodyvalor_final,
                     entrega: req.body.entrega,
-                    id_trello: req.body.id_trello
                 }
                 console.log(data)
                 const atividades = await Atividades.update(data ,{
@@ -224,6 +224,9 @@ module.exports = {
                         id: req.body.id
                     }
                 })
+
+                let id_trello = req.body.id_trello
+
                 res.status(200).json(atividades);
             } else {
                 res.status(400).json({ error: 'user not found' });

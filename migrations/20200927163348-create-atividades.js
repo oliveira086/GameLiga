@@ -29,6 +29,10 @@ module.exports = {
         type: Sequelize.DATE(6),
         allowNull: false
       },
+      trello_id: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       created_at: {
         type: Sequelize.DATE(6),
         allowNull: true

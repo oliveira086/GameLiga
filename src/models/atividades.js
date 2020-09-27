@@ -22,6 +22,10 @@ const Atividades = (sequelize, DataTypes) => {
           type: DataTypes.TIME(5),
           allowNull: false
         },
+        trello_id: {
+          type: DataTypes.STRING,
+          allowNull: false
+        },
         users_id: {
           type: DataTypes.INTEGER,
           allowNull: true,
