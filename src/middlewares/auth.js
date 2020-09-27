@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 
 module.exports = (req,res,next) => {
     const token = req.headers.token;
-    console.log('TESTANDO', JSON.stringify(req.headers))
+    console.log('TESTANDO', token)
     if(!token) {
         return res.status(401).json({error: 'token not declared'})
     }
