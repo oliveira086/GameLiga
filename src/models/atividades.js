@@ -15,8 +15,24 @@ const Atividades = (sequelize, DataTypes) => {
           allowNull: false
         },
         valor_final: {
-            type: DataTypes.INTEGER(6),
-            allowNull: false
+          type: DataTypes.INTEGER(6),
+          allowNull: false
+        },
+        user_id: {
+          type: DataTypes.INTEGER,
+          primaryKey: true,
+          allowNull: false,
+          references: { model: 'users', key: 'id' },
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
+        },
+        estados_id: {
+          type: DataTypes.INTEGER,
+          primaryKey: true,
+          allowNull: false,
+          references: { model: 'estados', key: 'id' },
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
         }
       },
       {
