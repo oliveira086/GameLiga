@@ -212,32 +212,26 @@ module.exports = {
             if(user != null){
                 var id = req.body.trello_id; // REQUIRED
 
-                var data = {
+                var dataTrello = {
                     idMembers: 'MEMBER_ID,MEMBER_ID,MEMBER_ID',
                     idLabels: req.body.id_trello,
                 };
-                Trello.card.update(id, data).then(function (response) {
+
+                Trello.card.update(id, dataTrello).then(function (response) {
                     console.log('response ', response);
                 }).catch(function (error) {
                      console.log('error', error);
                 });
                 
                 let data = {
-                    nome: req.body.nome,
-                    valor: req.body.valor,
-                    valor_inicio: req.body.valor_inicio,
-                    valor_final: req.body.valor_final,
-                    entrega: req.body.entrega,
-                    trello_id: req.body.trello_id
+                    users_id: req.body.users_id
                 }
-                console.log(data)
+
                 const atividades = await Atividades.update(data ,{
                     where: {
                         id: req.body.id
                     }
                 })
-
-                
 
                 res.status(200).json(atividades);
             } else {
