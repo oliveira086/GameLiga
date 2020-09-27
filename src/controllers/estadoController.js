@@ -40,23 +40,41 @@ module.exports = {
     async createEstado(req, res, next) {
         try {
 
-            const estadoExist = await Estados.findAll({
-                where: {
-                    nome: req.body.estado
+            const token = req.body.token;
+            if(!token) {
+                res.status(401).json({error: 'token not declared'})
+            }
+            jwt.verify(token, process.env.SECRET_KEY, (error,decoded)=> {
+                if(error){
+                    res.status(401).json({error: 'token invalid'})
                 }
+                req.email = decoded.email
             })
 
-            if (estadoExist[0]) {
-                res.status(400).json({error: 'estado already exists'})
-            } else {
+            const user = await Users.findOne({
+                where:{
+                    email: req.email
+                },
+                attributes: ['nome']
+            })
 
-                const user = await Estados.create(req.body);
-                res.status(200);
-                res.json({
-                    token
-                });
-            }
-            
+            if(user != null){
+                const estadoExist = await Estados.findAll({
+                    where: {
+                        nome: req.body.nome
+                    }
+                })
+                if (estadoExist[0]) {
+                    res.status(400).json({error: 'estado already exists'})
+                } else {
+    
+                    const user = await Estados.create(req.body);
+                    res.status(200);
+                    res.json({
+                        token
+                    });
+                }
+            } 
         } catch (error) {
             console.log(error)
             res.status(500);
