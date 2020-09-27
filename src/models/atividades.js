@@ -18,6 +18,10 @@ const Atividades = (sequelize, DataTypes) => {
           type: DataTypes.INTEGER(6),
           allowNull: false
         },
+        entrega: {
+          type: DataTypes.TIMESTAMP,
+          allowNull: false
+        },
         users_id: {
           type: DataTypes.INTEGER,
           allowNull: true,

@@ -25,6 +25,10 @@ module.exports = {
         type: Sequelize.INTEGER(6),
         allowNull: false
       },
+      entrega: {
+        type: Sequelize.TIMESTAMP,
+        allowNull: false
+      },
       created_at: {
         type: Sequelize.DATE(6),
         allowNull: true

@@ -15,6 +15,7 @@ router.post('/deleteEstados', estadoController.deleteEstado)
 
 router.post('/getAtividades', atividadesController.getAtividades)
 router.post('/createAtividades', atividadesController.createAtividade)
+router.post('/deleteAtividades', atividadesController.deleteAtividade)
 
 router.post('/login',loginController.login)
 
