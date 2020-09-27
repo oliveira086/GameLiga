@@ -1,15 +1,16 @@
 const jwt = require('jsonwebtoken')
 
 module.exports = (req,res,next) => {
-    const token = req.headers.Authorization;
+    const token = req.headers.token;
+    console.log('TESTANDO', JSON.stringify(req.headers))
     if(!token) {
         return res.status(401).json({error: 'token not declared'})
     }
-    jwt.verify(token, process.env.SECRET_KEY, (error,decoded)=> {
+    jwt.verify(token,process.env.SECRET_KEY, (error,decoded)=> {
         if(error){
             return res.status(401).json({error: 'token invalid'})
         }
-        req.email = decoded.email
-        return next();
+        let email = decoded.email
+        return email
     })
 }
