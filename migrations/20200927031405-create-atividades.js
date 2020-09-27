@@ -43,7 +43,7 @@ module.exports = {
       estados_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
-        references: { model: 'atividades', key: 'id'},
+        references: { model: 'estados', key: 'id'},
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
