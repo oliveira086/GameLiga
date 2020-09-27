@@ -26,7 +26,7 @@ module.exports = {
         allowNull: false
       },
       entrega: {
-        type: Sequelize.TIMESTAMP,
+        type: Sequelize.DATE(6),
         allowNull: false
       },
       created_at: {

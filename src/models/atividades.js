@@ -19,7 +19,7 @@ const Atividades = (sequelize, DataTypes) => {
           allowNull: false
         },
         entrega: {
-          type: DataTypes.TIMESTAMP,
+          type: DataTypes.TIME(5),
           allowNull: false
         },
         users_id: {
