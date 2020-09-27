@@ -22,13 +22,17 @@ const Atividades = (sequelize, DataTypes) => {
           type: DataTypes.INTEGER,
           primaryKey: true,
           allowNull: true,
-          references: { model: 'users', key: 'id' }
+          references: { model: 'users', key: 'id' },
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
         },
         estados_id: {
           type: DataTypes.INTEGER,
           primaryKey: true,
           allowNull: false,
-          references: { model: 'estados', key: 'id' }
+          references: { model: 'estados', key: 'id' },
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
         }
       },
       {
@@ -37,7 +41,6 @@ const Atividades = (sequelize, DataTypes) => {
       }
     )
     atividades.associate = (models) => {
-        atividades.belongsTo(models.Users, { foreignKey: 'user_id', as: 'usuario' })
         atividades.belongsTo(models.Estados, {foreignKey: 'estados_id', as: 'estados'})
     };
     return atividades;
