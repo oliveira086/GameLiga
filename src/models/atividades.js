@@ -22,17 +22,13 @@ const Atividades = (sequelize, DataTypes) => {
           type: DataTypes.INTEGER,
           primaryKey: true,
           allowNull: true,
-          references: { model: 'users', key: 'id' },
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
+          references: { model: 'users', key: 'id' }
         },
         estados_id: {
           type: DataTypes.INTEGER,
           primaryKey: true,
           allowNull: false,
-          references: { model: 'estados', key: 'id' },
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
+          references: { model: 'estados', key: 'id' }
         }
       },
       {
