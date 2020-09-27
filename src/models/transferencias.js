@@ -28,7 +28,6 @@ const Transferencias = (sequelize, DataTypes) => {
     )
     transferencias.associate = (models) => {
         transferencias.belongsTo(models.Users, {foreignKey: 'users_deb', as: 'users'})
-        transferencias.belongsTo(models.Users, {foreignKey: 'users_cred', as: 'users'})
     };
     return transferencias;
   }
