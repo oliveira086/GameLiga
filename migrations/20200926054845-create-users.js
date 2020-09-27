@@ -29,7 +29,7 @@ module.exports = {
           type: Sequelize.INTEGER(4),
           allowNull: false
       },
-      superUser: {
+      super_user: {
         type: Sequelize.INTEGER(4),
         allowNull: false
       },

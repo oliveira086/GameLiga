@@ -22,7 +22,7 @@ const Users = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER(6),
             allowNull: false
         },
-        superUser: {
+        super_user: {
           type: DataTypes.INTEGER(4),
           allowNull: false
         }

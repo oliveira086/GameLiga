@@ -45,8 +45,6 @@ module.exports = {
                 const hash = bcrypt.hashSync(req.body.senha, salt);
 
                 req.body.senha = hash
-                
-
                 console.log(req.body)
                 
                 const user = await Users.create(req.body);
