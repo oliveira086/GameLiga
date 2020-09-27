@@ -1,16 +1,11 @@
 const { sequelize, Atividades, Users} = require('../models');
 const jwt = require('jsonwebtoken')
-
-let trelloApi = process.env.TRELLO_API_KEY
-let trelloToken = process.env.TRELLO_TOKEN
-
-console.log('testadndo' + process.env.TRELLO_API_KEY)
-
 const Trello = require('../../node_modules/trello-node-api')(process.env.TRELLO_API_KEY, process.env.TRELLO_TOKEN)
 
 
 module.exports = {
     async getAtividades(req, res, next) {
+        console.log('testadndo' + process.env.TRELLO_API_KEY)
         try {
             const token = req.body.token;
             if(!token) {
