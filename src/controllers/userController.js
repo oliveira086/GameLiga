@@ -12,7 +12,7 @@ module.exports = {
             if(!token) {
                 res.status(401).json({error: 'token not declared'})
             }
-            jwt.verify(token,process.env.SECRET_KEY, (error,decoded)=> {
+            jwt.verify(token, process.env.SECRET_KEY, (error,decoded)=> {
                 if(error){
                     res.status(401).json({error: 'token invalid'})
                 }
