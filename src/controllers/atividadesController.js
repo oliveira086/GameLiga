@@ -153,4 +153,41 @@ module.exports = {
         }
     },
 
+    async getAtividadesUser(req, res, next) {
+        try {
+            const token = req.body.token;
+            if(!token) {
+                res.status(401).json({error: 'token not declared'})
+            }
+            jwt.verify(token, process.env.SECRET_KEY, (error,decoded)=> {
+                if(error){
+                    res.status(401).json({error: 'token invalid'})
+                }
+                req.email = decoded.email
+            })
+
+            const user = await Users.findOne({
+                where:{
+                    email: req.email
+                },
+                attributes: ['nome', 'id']
+            })
+            if(user != null){ 
+                const atividades = await Atividades.findAll({
+                    where: {
+                        users_id: user.id
+                    }
+                })
+                res.status(200).json(atividades);
+            } else {
+                res.status(400).json({ error: 'user not found' });
+            }
+        }
+        catch (error) {
+            console.log(error)
+            res.status(500);
+            res.json({error: 'internal error'});
+        }
+    },
+
 }

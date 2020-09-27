@@ -14,6 +14,7 @@ router.post('/createEstados', estadoController.createEstado)
 router.post('/deleteEstados', estadoController.deleteEstado)
 
 router.post('/getAtividades', atividadesController.getAtividades)
+router.post('/getAtividadesUser', atividadesController.getAtividadesUser)
 router.post('/createAtividades', atividadesController.createAtividade)
 router.post('/deleteAtividades', atividadesController.deleteAtividade)
 
