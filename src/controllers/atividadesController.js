@@ -211,9 +211,10 @@ module.exports = {
             })
             if(user != null){
                 var id = req.body.trello_id; // REQUIRED
+                let {id_trello_users} = req.body
 
                 var dataTrello = {
-                    idMembers: `${req.body.id_trello}`,
+                    idMembers: `${id_trello_users}`,
                 };
 
                 Trello.card.update(id, dataTrello).then(function (response) {
