@@ -74,7 +74,7 @@ module.exports = {
                         valor: req.body.valor,
                         valor_inicio: req.body.valor_inicio,
                         valor_final: req.body.valor_final,
-                        estados_id: req.body.estado_id
+                        estados_id: req.body.estados_id
                     }
                     const atividadeCriada = await Atividades.create(data);
                     res.status(200);
