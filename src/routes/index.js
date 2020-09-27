@@ -17,6 +17,7 @@ router.post('/getAtividades', atividadesController.getAtividades)
 router.post('/getAtividadesUser', atividadesController.getAtividadesUser)
 router.post('/createAtividades', atividadesController.createAtividade)
 router.post('/deleteAtividades', atividadesController.deleteAtividade)
+router.post('/buyAtividade', atividadesController.buyAtividade)
 
 router.post('/login',loginController.login)
 
