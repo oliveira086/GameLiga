@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 let trelloApi = process.env.TRELLO_API_KEY
 let trelloToken = process.env.TRELLO_TOKEN
 
-console.log(trelloApi)
+console.log('testadndo' + process.env.TRELLO_API_KEY)
 
 const Trello = require('../../node_modules/trello-node-api')(process.env.TRELLO_API_KEY, process.env.TRELLO_TOKEN)
 
