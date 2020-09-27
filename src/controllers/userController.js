@@ -9,7 +9,6 @@ module.exports = {
         try {
 
             const token = req.body.token;
-            console.log('FOOOI' + token)
             if(!token) {
                 res.status(401).json({error: 'token not declared'})
             }
@@ -24,7 +23,7 @@ module.exports = {
                 where:{
                     email: req.email
                 },
-                attributes: ['nome', 'saldo']
+                attributes: ['nome', 'saldo', 'super_user']
             })
             if(user != null){ 
                 res.status(200).json(user);
