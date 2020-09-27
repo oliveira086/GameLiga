@@ -14,7 +14,7 @@ module.exports = {
                 attributes: ['nome', 'saldo']
             })
             if(user != null){
-                return res.status(200).json(user);
+                return res.status(200).json(req.headers.authorization, user);
             } else {
             return res.status(400).json({ error: 'user not found' });
             }
