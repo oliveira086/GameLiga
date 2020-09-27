@@ -218,6 +218,7 @@ module.exports = {
                     entrega: req.body.entrega,
                     id_trello: req.body.id_trello
                 }
+                console.log(data)
                 const atividades = await Atividades.update(data ,{
                     where: {
                         id: req.body.id
