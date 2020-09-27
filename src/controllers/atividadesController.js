@@ -221,22 +221,24 @@ module.exports = {
                 };
 
                 Trello.card.update(id, dataTrello).then(function (response) {
-                    console.log('response ', response);
+                    let data = {
+                        users_id: req.body.users_id
+                    }
+                    const atividades = Atividades.update(data ,{
+                        where: {
+                            id: req.body.id_atividade
+                        }
+                    })
+                    res.status(200).json(atividades);
                 }).catch(function (error) {
                      console.log('error', error);
                 });
                 
-                let data = {
-                    users_id: req.body.users_id
-                }
+                
 
-                const atividades = await Atividades.update(data ,{
-                    where: {
-                        id: req.body.id_atividade
-                    }
-                })
+                
 
-                res.status(200).json(atividades);
+                
             } else {
                 res.status(400).json({ error: 'user not found' });
             }
