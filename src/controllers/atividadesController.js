@@ -213,8 +213,7 @@ module.exports = {
                 var id = req.body.trello_id; // REQUIRED
 
                 var dataTrello = {
-                    idMembers: 'MEMBER_ID,MEMBER_ID,MEMBER_ID',
-                    idLabels: req.body.id_trello,
+                    idMembers: req.body.id_trello,
                 };
 
                 Trello.card.update(id, dataTrello).then(function (response) {
