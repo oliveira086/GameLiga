@@ -57,6 +57,8 @@ module.exports = {
                 attributes: ['nome']
             })
 
+            console.log(user)
+
             if(user != null){
 
                 const estadoExist = await Atividades.findAll({
