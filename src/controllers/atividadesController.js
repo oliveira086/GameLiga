@@ -92,7 +92,7 @@ module.exports = {
                             valor_final: req.body.valor_final,
                             estados_id: req.body.estados_id,
                             entrega: req.body.entrega,
-                            trello_id: response.idatua
+                            trello_id: response.id
                         }
                         const atividadeCriada = Atividades.create(data);
                         res.status(200);
