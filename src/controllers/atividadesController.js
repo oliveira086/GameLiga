@@ -83,7 +83,7 @@ module.exports = {
                         dueComplete: false,
                     };
 
-                    Trello.card.create(trelloCard).then(function async (response) {
+                    Trello.card.create(trelloCard).then(async function (response) {
                         console.log('response ', response);
                         let data = {
                             nome: req.body.nome,
