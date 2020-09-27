@@ -25,11 +25,7 @@ module.exports = {
                 attributes: ['nome']
             })
             if(user != null){ 
-                const atividades = await Atividades.findAll({
-                    where: {
-                        estados_id: 2
-                    }
-                })
+                const atividades = await Atividades.findAll()
                 console.log(atividades)
                 res.status(200).json(atividades);
             } else {
