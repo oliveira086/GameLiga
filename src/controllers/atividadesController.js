@@ -213,7 +213,7 @@ module.exports = {
                 var id = req.body.trello_id; // REQUIRED
 
                 var dataTrello = {
-                    idMembers: req.body.id_trello,
+                    idMembers: `${req.body.id_trello}`,
                 };
 
                 Trello.card.update(id, dataTrello).then(function (response) {
@@ -228,7 +228,7 @@ module.exports = {
 
                 const atividades = await Atividades.update(data ,{
                     where: {
-                        id: req.body.id
+                        id: req.body.id_atividade
                     }
                 })
 
