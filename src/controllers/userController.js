@@ -10,14 +10,13 @@ module.exports = {
 
             const token = req.body.token;
             if(!token) {
-                return res.status(401).json({error: 'token not declared'})
+                res.status(401).json({error: 'token not declared'})
             }
             jwt.verify(token,process.env.SECRET_KEY, (error,decoded)=> {
                 if(error){
-                    return res.status(401).json({error: 'token invalid'})
+                    res.status(401).json({error: 'token invalid'})
                 }
                 req.email = decoded.email
-                return next()
             })
 
             const user = await Users.findOne({
