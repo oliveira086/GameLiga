@@ -105,16 +105,15 @@ module.exports = {
             if(user != null){
 
                 const {id} = req.body
-                const propsForUpate = Object.keys(req.body)
 
-                const estados = await Estados.update(req.body, {
+                const estados = await Estados.destroy({
                     where: {
                         id
                     }
                 });
 
                 if (estados[0]) {
-                    res.status(200).json(`estado updated: ${propsForUpate}`)
+                    res.status(200).json(`estado deleted: ${propsForUpate}`)
                 } else {
                     res.status(500).json({error: 'estado not found'})
                 }
