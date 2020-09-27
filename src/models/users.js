@@ -2,6 +2,12 @@ const Users = (sequelize, DataTypes) => {
     let users = sequelize.define(
       'Users',
       {
+        id: {
+          type: DataTypes.INTEGER(11),
+          allowNull: false,
+          primaryKey: true,
+          autoIncrement: true
+        },
         id_trello: {
           type: DataTypes.STRING,
           allowNull: true,
@@ -36,6 +42,10 @@ const Users = (sequelize, DataTypes) => {
         timestamps: true
       }
     )
+    Users.associate = (models) => {
+      Users.belongsTo(models.Transferencias, {foreignKey: 'id', as: 'users_deb'})
+      Users.belongsTo(models.Transferencias, {foreignKey: 'id', as: 'users_cred'})
+    }
     return users;
   }
   module.exports = Users;
