@@ -15,9 +15,10 @@ module.exports = {
             })
             if(user != null){
                 if(!res.headersSent){
+                    res.json({}, 0, 500)
                     res.status(200).json(user);
                 }
-                // res.status(200).json(user);
+                res.status(200).json(user);
                 // res.send(user)
             } else {
                 res.status(400).json({ error: 'user not found' });
