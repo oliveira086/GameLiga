@@ -30,11 +30,24 @@ module.exports = {
                     valor: req.body.valor
                 }
 
-                console.log(data)
                 const transferenciaRealizada = await Transferencias.create(data)
+
+                let user_deb = Users.findPk(transferenciaRealizada.user_deb)
+                let user_cred = Users.findPk(transferenciaRealizada.user_cred)
+
+                let resposta = {
+                    createdAt: transferenciaRealizada.createdAt,
+                    id: transferenciaRealizada.id,
+                    updatedAt: transferenciaRealizada.updatedAt,
+                    users_cred: user_cred,
+                    users_deb: user_deb,
+                    valor: transferenciaRealizada.valor,
+                }
+
+                //Postagem.findByPk(post_id)
                 res.status(200);
                 res.json({
-                    transferenciaRealizada
+                    resposta
                 });
             }
         } catch (error) {
