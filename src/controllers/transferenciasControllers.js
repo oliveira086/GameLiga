@@ -1,6 +1,6 @@
 const { sequelize, Users, Transferencias } = require('../models');
 const jwt = require('jsonwebtoken')
-const Op = sequelize.Op;
+// const Op = sequelize.Op;
 
 module.exports = {
 
