@@ -80,18 +80,25 @@ module.exports = {
                 const transferencias = await Transferencias.findAll({
                     include: [
                         {
-                          model: Users,
-                          as: 'users',
-                          required: false,
-                          limit: 5,
-                          order: sequelize.literal('id DESC'), 
-                        }
+                            model: Users,
+                            as: 'users_deb',
+                            required: false,
+                            limit: 5,
+                            order: sequelize.literal('id DESC'), 
+                        },
+                        {
+                            model: Users,
+                            as: 'users_cred',
+                            required: false,
+                            limit: 5,
+                            order: sequelize.literal('id DESC'), 
+                        },
                     ],
                     where: {
                         users_deb: user.id
                     }
                 })
-                
+
                 res.status(200);
                 res.json({
                     transferencias
