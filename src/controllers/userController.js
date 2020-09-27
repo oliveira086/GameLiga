@@ -10,12 +10,11 @@ module.exports = {
             const user = await Users.findOne({
                 where:{
                     email: req.email
-                }
+                },
+                attributes: ['nome', 'saldo']
             })
             console.log('FOOOi' + JSON.stringify(user))
-            if(user) {
-                user.password = undefined
-                user.id = undefined
+            if(user.id != null){
                 return res.status(200).json(user);
             } else {
             return res.status(400).json({ error: 'user not found' });
