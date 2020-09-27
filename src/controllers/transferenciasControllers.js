@@ -1,6 +1,5 @@
 const { sequelize, Users, Transferencias } = require('../models');
 const jwt = require('jsonwebtoken')
-// const Op = sequelize.Op;
 
 module.exports = {
 
@@ -27,7 +26,7 @@ module.exports = {
             if(user != null){
                 let data = {
                     users_cred: req.body.users_cred,
-                    users_deb: req.bdy.users_deb,
+                    users_deb: req.body.users_deb,
                     valor: req.body.valor
                 }
                 const transferenciaRealizada = await Transferencias.create(data)
@@ -65,7 +64,6 @@ module.exports = {
             if(user != null){
                 const transferencias = await Transferencias.findAll({
                     where: {
-                        // [Op.or]: [{users_cred: user.id}, {users_deb: user.id}]
                         users_deb: user.id
                     }
                 })
