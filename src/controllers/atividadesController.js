@@ -210,7 +210,15 @@ module.exports = {
                 attributes: ['nome']
             })
             if(user != null){ 
-                const atividades = await Atividades.update(req.body ,{
+                let data = {
+                    nome: req.body.nome,
+                    valor: req.body.valor,
+                    valor_inicio: req.bodyvalor_inicio,
+                    valor_final: req.bodyvalor_final,
+                    entrega: req.body.entrega,
+                    id_trello: req.body.id_trello
+                }
+                const atividades = await Atividades.update(data ,{
                     where: {
                         id: req.body.id
                     }
