@@ -37,39 +37,32 @@ module.exports = {
         }
     },
 
-    // async createUser(req, res, next) {
-    //     try {
+    async createEstado(req, res, next) {
+        try {
 
-    //         const userExist = await Users.findAll({
-    //             where: {
-    //                 email: req.body.email
-    //             }
-    //         })
+            const estadoExist = await Estados.findAll({
+                where: {
+                    nome: req.body.estado
+                }
+            })
 
-    //         if (userExist[0]) {
-    //             res.status(400).json({error: 'email already exists'})
-    //         } else {
-                
-    //             const salt = bcrypt.genSaltSync(10);
-    //             const hash = bcrypt.hashSync(req.body.senha, salt);
+            if (estadoExist[0]) {
+                res.status(400).json({error: 'estado already exists'})
+            } else {
 
-    //             req.body.senha = hash
-    //             console.log(req.body)
-                
-    //             const user = await Users.create(req.body);
-    //             const token = generateToken(user.email);
-    //             res.status(201);
-    //             res.json({
-    //                 token
-    //             });
-    //         }
+                const user = await Estados.create(req.body);
+                res.status(200);
+                res.json({
+                    token
+                });
+            }
             
-    //     } catch (error) {
-    //         console.log(error)
-    //         res.status(500);
-    //         res.json({error: 'internal error'});
-    //     }
-    // },
+        } catch (error) {
+            console.log(error)
+            res.status(500);
+            res.json({error: 'internal error'});
+        }
+    },
 
     // async deleteUser(req, res, next) {
     //     try {
