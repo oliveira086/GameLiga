@@ -15,8 +15,11 @@ module.exports = {
             })
             if(user != null){
                 res.status(200).json(user);
-                return next([err])
+                res.setHeader('Content-Type', 'text/plain');
+                res.end('Cannot ' + req.method + ' ' + req.url);
             } else {
+                res.setHeader('Content-Type', 'text/plain');
+                res.end('Cannot ' + req.method + ' ' + req.url);
                 res.status(400).json({ error: 'user not found' });
                 return next([err])
             }
