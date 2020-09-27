@@ -26,6 +26,10 @@ const Transferencias = (sequelize, DataTypes) => {
         timestamps: true
       }
     )
+    Transferencias.associate = (models) => {
+      Transferencias.belongsTo(models.Users, { foreignKey: 'id', as: 'users_deb'})
+      Transferencias.belongsTo(models.Users, { foreignKey: 'id', as: 'users_cred'})
+    }
     return transferencias;
   }
   module.exports = Transferencias;
