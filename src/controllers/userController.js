@@ -6,13 +6,13 @@ const auth = require('../middlewares/auth')
 module.exports = {
     async getUser(req, res, next) {
         try {
-            auth(req, res, next);
-            console.log(req.email)
+            await auth(req, res, next);
             const user = await Users.findOne({
                 where:{
                     email: req.email
                 }
             })
+            console.log('FOOOi' + JSON.stringify(user))
             if(user) {
                 user.password = undefined
                 user.id = undefined
