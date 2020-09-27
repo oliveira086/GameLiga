@@ -15,8 +15,8 @@ module.exports = {
             })
             if(user != null){
                 if(!res.headersSent){
-                    res.json({}, 0, 500)
-                    res.status(200).json(user);
+                    res.json(user)
+                    // res.status(200).json(user);
                 }
                 // res.status(200).json(user);
                 // res.send(user)
