@@ -43,7 +43,6 @@ const Users = (sequelize, DataTypes) => {
       {
         tableName: "users",
         timestamps: true,
-        sync: {force: true},
       }
     )
     
