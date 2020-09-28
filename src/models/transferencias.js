@@ -19,9 +19,6 @@ const Transferencias = (sequelize, DataTypes) => {
         sync: {force: true},
       }
     )
-    Transferencias.associate = (models) => {
-      Transferencias.belongsTo(models.Users, {foreingKey: 'users_id', as: 'usuario'})
-    }
     return transferencias;
   }
   module.exports = Transferencias;
