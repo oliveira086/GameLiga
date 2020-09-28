@@ -80,7 +80,6 @@ module.exports = {
                 const transferencias = await Transferencias.findAll({
                     include: [{
                         model: Users,
-                        as: 'users_id'
                     }],
                     // where: {
                     //     users_deb: user.id

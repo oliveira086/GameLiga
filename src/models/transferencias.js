@@ -18,10 +18,6 @@ const Transferencias = (sequelize, DataTypes) => {
         timestamps: true
       }
     )
-
-    Transferencias.associate = (models) => {
-      Transferencias.hasMany(models.Users, { as: 'users_id'});
-    };
     return transferencias;
   }
   module.exports = Transferencias;

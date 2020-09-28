@@ -42,6 +42,9 @@ const Users = (sequelize, DataTypes) => {
         timestamps: true
       }
     )
+    Users.associate = (models) => {
+      Users.belongsTo(models.Transferencias)
+    }
     return users;
   }
   module.exports = Users;
