@@ -35,17 +35,13 @@ const Users = (sequelize, DataTypes) => {
         super_user: {
           type: DataTypes.INTEGER(4),
           allowNull: false
-        },
-        associate: (models) => {
-          Users.hasOne(models.Transferencias, { foreingKey: 'users_id', as: 'usuario' })
         }
       },
       {
         tableName: "users",
-        timestamps: true,
+        timestamps: true
       }
     )
-    
     return users;
   }
   module.exports = Users;
