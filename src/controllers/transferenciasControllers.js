@@ -83,9 +83,9 @@ module.exports = {
                             model: Users
                         }
                     ],
-                    where: {
-                        users_deb: user.id
-                    }
+                    // where: {
+                    //     users_deb: user.id
+                    // }
                 })
 
                 res.status(200);
