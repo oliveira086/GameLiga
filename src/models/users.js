@@ -43,11 +43,8 @@ const Users = (sequelize, DataTypes) => {
       }
     )
     Users.associate = (models) => {
-      Users.hasOne(models.Transferencias, { foreignKey: 'id' });
-
+      Users.hasMany(models.Transferencias, { foreignKey: 'id' });
     }
-    
-
     return users;
   }
   module.exports = Users;
