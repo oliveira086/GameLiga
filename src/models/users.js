@@ -42,9 +42,10 @@ const Users = (sequelize, DataTypes) => {
         timestamps: true
       }
     )
-    // Users.associate = (models) => {
-    //   Users.belongsToMany(models.Transferencias, { foreignKey: 'id', as: 'users',});
-    // }
+    Users.associate = (models) => {
+      Users.hasOne(models.Transferencias, { foreignKey: 'users_deb' });
+      Users.hasMany(models.Transferencias, { foreignKey: 'users_cred' });
+    }
     
 
     return users;
