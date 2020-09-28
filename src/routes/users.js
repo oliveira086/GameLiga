@@ -6,5 +6,6 @@ const usuarioController = require('../controllers/userController')
 router.post('/cadastro', usuarioController.createUser);
 router.post('/getUser', usuarioController.getUser);
 router.post('/getUserWithEmail', usuarioController.getUserWithEmail)
+router.post('/getConfirmationPass', usuarioController.getConfirmationPass)
 
 module.exports = router;
