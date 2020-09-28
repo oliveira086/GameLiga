@@ -18,6 +18,9 @@ const Transferencias = (sequelize, DataTypes) => {
         timestamps: true
       }
     )
+    Transferencias.associate = (models) => {
+      Transferencias.belongsTo(models.Transferencias, {foreignKey: 'users'})
+    }
     return transferencias;
   }
   module.exports = Transferencias;
