@@ -285,7 +285,7 @@ module.exports = {
                                 id: user.id
                             }
                         })
-                        res.status(200).json(senha);
+                        res.status(200).json({ok:senha});
                     } else {
                         res.status(500).json({erro: 'password not corret'});
                     }
