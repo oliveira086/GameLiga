@@ -1,6 +1,8 @@
 const { sequelize, Users, Transferencias } = require('../models');
 const jwt = require('jsonwebtoken')
 
+sequelize.sync()
+
 module.exports = {
 
     async sendTransferencia(req, res, next) {
@@ -78,9 +80,9 @@ module.exports = {
 
             if(user != null){
                 const transferencias = await Transferencias.findAll({
-                    include: [{
-                        model: Users,
-                    }],
+                    // include: [{
+                    //     model: Users,
+                    // }],
                     // where: {
                     //     users_deb: user.id
                     // }
