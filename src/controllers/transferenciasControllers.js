@@ -60,25 +60,25 @@ module.exports = {
     },
     async getTransferencias(req, res, next) {
         try {
-            const token = req.body.token;
-            if(!token) {
-                res.status(401).json({error: 'token not declared'})
-            }
-            jwt.verify(token, process.env.SECRET_KEY, (error,decoded)=> {
-                if(error){
-                    res.status(401).json({error: 'token invalid'})
-                }
-                req.email = decoded.email
-            })
+            // const token = req.body.token;
+            // if(!token) {
+            //     res.status(401).json({error: 'token not declared'})
+            // }
+            // jwt.verify(token, process.env.SECRET_KEY, (error,decoded)=> {
+            //     if(error){
+            //         res.status(401).json({error: 'token invalid'})
+            //     }
+            //     req.email = decoded.email
+            // })
 
-            const user = await Users.findOne({
-                where:{
-                    email: req.email
-                },
-                attributes: ['id']
-            })
+            // const user = await Users.findOne({
+            //     where:{
+            //         email: req.email
+            //     },
+            //     attributes: ['id']
+            // })
 
-            if(user != null){
+            // if(user != null){
                 const transferencias = await Transferencias.findAll({
                     include: [{ model: Users, as: 'usuario' }]
                     // where: {
@@ -90,7 +90,7 @@ module.exports = {
                 res.json({
                     transferencias
                 });
-            }
+            // }
         } catch (error) {
             console.log(error)
             res.status(500);
