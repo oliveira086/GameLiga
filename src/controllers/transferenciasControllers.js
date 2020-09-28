@@ -140,7 +140,10 @@ module.exports = {
                     include: [{
                         model: Users, as: 'usuario_agenda_id',
                         attributes: ['nome']
-                    }]
+                    }],
+                    where: {
+                        users_agenda: user.id,
+                    }
                     
                 })
                 res.status(200);
