@@ -8,17 +8,9 @@ const Transferencias = (sequelize, DataTypes) => {
         },
         users_deb: {
           type: DataTypes.INTEGER,
-          allowNull: true,
-          references: { model: 'Users', key: 'users_deb' },
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
         },
         users_cred: {
           type: DataTypes.INTEGER,
-          allowNull: false,
-          references: { model: 'Users', key: 'users_cred' },
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
         }
       },
       {
