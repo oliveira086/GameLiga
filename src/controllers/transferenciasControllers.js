@@ -1,7 +1,7 @@
-const { sequelize, Users, Transferencias } = require('../models');
+const {Users, Transferencias, Contatos } = require('../models');
+const sequelize = require('sequelize');
 const jwt = require('jsonwebtoken')
-
-sequelize.sync()
+const Op = sequelize.Op;
 
 module.exports = {
 
@@ -32,25 +32,34 @@ module.exports = {
                     valor: req.body.valor
                 }
 
-                const transferenciaRealizada = await Transferencias.create(data)
+                let contatos = await Contatos.findAll({
+                    where: {
+                        users_agenda: data.users_deb,
+                        users_id: data.users_cred
+                    }
+                })
 
-                let user_deb = Users.findByPk(transferenciaRealizada.user_deb)
-                let user_cred = Users.findByPk(transferenciaRealizada.user_cred)
+                if(contatos.length == 0){
+                    console.log('PASSEI')
+                    const transferenciaRealizada = await Transferencias.create(data)
+                    let dataContato = {
+                        users_agenda: data.users_deb,
+                        users_id: req.body.users_cred
+                    }
+                    const contatoSalvo = await Contatos.create(dataContato)
 
-                let resposta = {
-                    createdAt: transferenciaRealizada.createdAt,
-                    id: transferenciaRealizada.id,
-                    updatedAt: transferenciaRealizada.updatedAt,
-                    users_cred: user_cred,
-                    users_deb: user_deb,
-                    valor: transferenciaRealizada.valor,
+                    //Postagem.findByPk(post_id)
+                    res.status(200);
+                    res.json({
+                        transferenciaRealizada, contatoSalvo
+                    });
+                } else {
+                    res.status(500);
+                    res.json({error: 'Contato exists'});
                 }
-
-                //Postagem.findByPk(post_id)
-                res.status(200);
-                res.json({
-                    resposta
-                });
+            } else {
+                res.status(500);
+                res.json({error: 'User not exists'});
             }
         } catch (error) {
             console.log(error)
@@ -89,7 +98,8 @@ module.exports = {
                         attributes: ['nome']
                     }],
                     where: {
-                        users_deb: user.id
+                        [Op.or]: [{users_deb: user.id}, {users_cred: user.id}]
+                        
                     }
                 })
 
@@ -104,6 +114,45 @@ module.exports = {
             res.json({error: 'internal error'});
         }
     },
-    
+
+    async getContatos(req, res, next) {
+        try {
+            const token = req.body.token;
+            if(!token) {
+                res.status(401).json({error: 'token not declared'})
+            }
+            jwt.verify(token, process.env.SECRET_KEY, (error,decoded)=> {
+                if(error){
+                    res.status(401).json({error: 'token invalid'})
+                }
+                req.email = decoded.email
+            })
+
+            const user = await Users.findOne({
+                where:{
+                    email: req.email
+                },
+                attributes: ['id']
+            })
+
+            if(user != null){
+                const contatos = await Contatos.findAll({
+                    include: [{
+                        model: Users, as: 'usuario_agenda_id',
+                        attributes: ['nome']
+                    }],
+                })
+                res.status(200);
+                res.json({
+                    contatos
+                });
+            }
+
+        } catch( error ) {
+            console.log(error)
+            res.status(500);
+            res.json({error: 'internal error'});
+        }
+    }
 
 }

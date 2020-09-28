@@ -22,6 +22,7 @@ router.post('/buyAtividade', atividadesController.buyAtividade)
 
 router.post('/sendTransferencia', transferenciaController.sendTransferencia)
 router.post('/getTransferencias', transferenciaController.getTransferencias)
+router.post('/getContatos', transferenciaController.getContatos)
 
 router.post('/login',loginController.login)
 
