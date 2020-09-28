@@ -15,7 +15,8 @@ const Transferencias = (sequelize, DataTypes) => {
       },
       {
         tableName: "transferencias",
-        timestamps: true
+        timestamps: true,
+        sync: {force: true},
       }
     )
     Transferencias.associate = (models) => {

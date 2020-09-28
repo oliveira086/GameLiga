@@ -39,7 +39,8 @@ const Users = (sequelize, DataTypes) => {
       },
       {
         tableName: "users",
-        timestamps: true
+        timestamps: true,
+        sync: {force: true},
       }
     )
     Users.associate = (models) => {
