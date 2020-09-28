@@ -81,10 +81,7 @@ module.exports = {
                     include: [
                         {
                             model: Users,
-                            as: 'users',
-                            required: true,
-                            limit: 10,
-                            order: sequelize.literal('id DESC'), 
+                            as: 'users_deb'
                         }
                     ],
                     where: {
