@@ -42,9 +42,6 @@ const Users = (sequelize, DataTypes) => {
         timestamps: true
       }
     )
-    Users.associate = function(models) {
-      Users.hasOne(models.Transferencias, {as : 'users_id'})
-    };
     return users;
   }
   module.exports = Users;

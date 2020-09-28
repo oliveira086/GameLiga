@@ -19,8 +19,8 @@ const Transferencias = (sequelize, DataTypes) => {
       }
     )
 
-    Transferencias.associate = function(models) {
-      Transferencias.belongsTo(models.Users, { as: 'users_id'});
+    Transferencias.associate = (models) => {
+      Transferencias.hasMany(models.Users, { as: 'users_id'});
     };
     return transferencias;
   }
