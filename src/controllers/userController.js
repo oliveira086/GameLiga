@@ -55,7 +55,6 @@ module.exports = {
                 const hash = bcrypt.hashSync(req.body.senha, salt);
 
                 req.body.senha = hash
-                console.log(req.body)
                 
                 const user = await Users.create(req.body);
                 const token = generateToken(user.email);
@@ -227,7 +226,7 @@ module.exports = {
                 req.body.senha_confirmacao = hash
                 
                 let senha = await Users.update({
-                    senha_confirmacao: parseInt(req.body.senha_confirmacao)
+                    senha_confirmacao: req.body.senha_confirmacao
                 },
                 {
                     where: {
