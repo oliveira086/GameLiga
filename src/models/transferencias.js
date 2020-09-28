@@ -27,8 +27,8 @@ const Transferencias = (sequelize, DataTypes) => {
       }
     )
     Transferencias.associate = (models) => {
-      Transferencias.belongsToMany(models.Users, { foreignKey: 'id', as: 'users_deb'})
-      Transferencias.belongsToMany(models.Users, { foreignKey: 'id', as: 'users_cred'})
+      Transferencias.belongsTo(models.Users, { foreignKey: 'users_deb'})
+      Transferencias.belongsTo(models.Users, { foreignKey: 'users_cred'})
     }
     return transferencias;
   }
