@@ -133,10 +133,11 @@ module.exports = {
 
             const user = await Users.findOne({
                 where:{
-                    email: req.email
+                    email: req.body.email
                 },
                 attributes: ['nome']
             })
+            console.log(user)
             if(user != null){
                 let email = await Users.findOne({
                     where: {
@@ -146,6 +147,9 @@ module.exports = {
                 })
 
                 res.status(200).json(email);
+            } else {
+                res.status(500);
+                res.json({error: 'user not found'});
             }
         } catch (error) {
             console.log(error)
