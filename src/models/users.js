@@ -1,3 +1,5 @@
+const { Model } = require("sequelize/types");
+
 const Users = (sequelize, DataTypes) => {
     let users = sequelize.define(
       'Users',
@@ -43,7 +45,7 @@ const Users = (sequelize, DataTypes) => {
       }
     )
     Users.associate = (models) => {
-      Users.hasOne(models.Transferencias, { foreignKey: 'users' })
+      Users.belongsTo(models.Transferencias)
     }
     return users;
   }
