@@ -42,12 +42,12 @@ const Users = (sequelize, DataTypes) => {
         timestamps: true
       }
     )
-    Users.associate = (models) => {
-      Users.belongsToMany(models.Transferencias, {
-        as: 'users',
-        through: { model: Users }
-      })
-    }
+    User.associate = function(models) {
+      // associations can be defined here
+      User.belongsToMany(models.Transferencias, {
+        through: 'user'
+      });
+    };
     return users;
   }
   module.exports = Users;

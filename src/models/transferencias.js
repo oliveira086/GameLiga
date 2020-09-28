@@ -18,6 +18,14 @@ const Transferencias = (sequelize, DataTypes) => {
         timestamps: true
       }
     )
+
+    Transferencias.associate = function(models) {
+      models.User.belongsToMany(models.Users, { 
+        as: 'users',  //this is very important
+        through: { model: Transferencias }, 
+        // foreignKey: 'user_id' 
+      });
+    };
     return transferencias;
   }
   module.exports = Transferencias;
