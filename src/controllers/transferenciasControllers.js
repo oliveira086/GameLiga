@@ -137,11 +137,12 @@ module.exports = {
 
             if(user != null){
                 const contatos = await Contatos.findAll({
+                    attributes: ['users_agenda', 'users_id'],
                     include: [{
                         model: Users, as: 'usuario_agenda_id',
                         attributes: ['nome']
-                    }],
-                    attributes: ['users_agenda', 'users_id', 'usuario_agenda_id']
+                    }]
+                    
                 })
                 res.status(200);
                 res.json({
