@@ -156,6 +156,7 @@ module.exports = {
             res.json({error: 'internal error'});
         }
     },
+
     async getConfirmationPass(req, res, next){
         try {
             const token = req.body.token;
@@ -175,7 +176,6 @@ module.exports = {
                 },
                 attributes: ['nome']
             })
-            console.log(user)
             if(user != null){
                 let email = await Users.findOne({
                     where: {
@@ -189,13 +189,59 @@ module.exports = {
                     res.status(200).json({ok: 'user with pass'});
                 }
                
-                }
-                else {
-                    res.status(500);
-                    res.json({error: 'user not found'});
+            }
+            else {
+                res.status(500);
+                res.json({error: 'user not found'});
             }
 
         } catch (erro){
+            console.log(error)
+            res.status(500);
+            res.json({error: 'internal error'});
+        }
+    },
+    async saveConfirmationPass(req, res, next){
+        try {
+            const token = req.body.token;
+            if(!token) {
+                res.status(401).json({error: 'token not declared'})
+            }
+            jwt.verify(token, process.env.SECRET_KEY, (error,decoded)=> {
+                if(error){
+                    res.status(401).json({error: 'token invalid'})
+                }
+                req.email = decoded.email
+            })
+
+            const user = await Users.findOne({
+                where:{
+                    email: req.email
+                },
+                attributes: ['id']
+            })
+            if(user != null){
+
+                const salt = bcrypt.genSaltSync(10);
+                const hash = bcrypt.hashSync(req.body.senha_confirmacao, salt);
+                req.body.senha_confirmacao = hash
+                
+                let senha = await Users.update({
+                    senha_confirmacao: parseInt(req.body.senha_confirmacao)
+                },
+                {
+                    where: {
+                        id: user.id
+                    }
+                })
+                res.status(200).json(senha);
+            }
+            else {
+                res.status(500);
+                res.json({error: 'user not found'});
+            }
+
+        } catch(error) {
             console.log(error)
             res.status(500);
             res.json({error: 'internal error'});

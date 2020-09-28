@@ -25,7 +25,7 @@ const Users = (sequelize, DataTypes) => {
           allowNull: false
         },
         senha_confirmacao: {
-            type: DataTypes.INTEGER(4),
+            type: DataTypes.STRING(250),
             allowNull: true
         },
         saldo: {

@@ -7,5 +7,6 @@ router.post('/cadastro', usuarioController.createUser);
 router.post('/getUser', usuarioController.getUser);
 router.post('/getUserWithEmail', usuarioController.getUserWithEmail)
 router.post('/getConfirmationPass', usuarioController.getConfirmationPass)
+router.post('/saveConfirmationPass', usuarioController.saveConfirmationPass)
 
 module.exports = router;

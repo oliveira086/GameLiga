@@ -26,7 +26,7 @@ module.exports = {
         allowNull: false
       },
       senha_confirmacao: {
-          type: Sequelize.INTEGER,
+          type: Sequelize.STRING(200),
           allowNull: true
       },
       saldo: {
