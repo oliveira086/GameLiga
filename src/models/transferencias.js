@@ -20,7 +20,7 @@ const Transferencias = (sequelize, DataTypes) => {
       }
     )
     Transferencias.associate = (models) => {
-      Transferencias.belongsTo(models.Users, {as: 'users'})
+      Transferencias.belongsTo(models.Users, {foreingKey: 'users'})
     }
     return transferencias;
   }
