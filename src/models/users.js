@@ -42,9 +42,9 @@ const Users = (sequelize, DataTypes) => {
         timestamps: true
       }
     )
-    User.associate = function(models) {
+    Users.associate = function(models) {
       // associations can be defined here
-      User.belongsToMany(models.Transferencias, {
+      Users.belongsToMany(models.Transferencias, {
         through: 'user'
       });
     };
