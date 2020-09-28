@@ -245,5 +245,61 @@ module.exports = {
             res.status(500);
             res.json({error: 'internal error'});
         }
+    },
+    async updateConfirmationPass (req, res, next){
+        try {
+            const token = req.body.token;
+            if(!token) {
+                res.status(401).json({error: 'token not declared'})
+            }
+            jwt.verify(token, process.env.SECRET_KEY, (error,decoded)=> {
+                if(error){
+                    res.status(401).json({error: 'token invalid'})
+                }
+                req.email = decoded.email
+            })
+
+            const user = await Users.findOne({
+                where:{
+                    email: req.email
+                },
+                attributes: ['id', 'senha_confirmacao']
+            })
+            if(user != null){
+
+                let senhaAntiga = req.body.oldPass
+                let senhaNova = req.body.newPass
+                
+                bcrypt.compare(senhaAntiga, user.senha_confirmacao, function(err, result) {
+                    
+                    if(result) {
+                        const salt = bcrypt.genSaltSync(10);
+                        const hash = bcrypt.hashSync(senhaNova, salt);
+                        senhaNova = hash
+
+                        let senha = Users.update({
+                            senha_confirmacao: senhaNova
+                        },
+                        {
+                            where: {
+                                id: user.id
+                            }
+                        })
+                        res.status(200).json(senha);
+                    } else {
+                        res.status(500).json({erro: 'password not corret'});
+                    }
+                })
+            }
+            else {
+                res.status(500);
+                res.json({error: 'user not found'});
+            }
+
+        } catch(error) {
+            console.log(error)
+            res.status(500);
+            res.json({error: 'internal error'});
+        }
     }
 }
