@@ -45,7 +45,7 @@ const Users = (sequelize, DataTypes) => {
     Users.associate = (models) => {
       Users.belongsToMany(models.Transferencias, {
         as: 'users',
-        through: { model: Users }, 
+        through: { model: Users }
       })
     }
     return users;
