@@ -35,6 +35,9 @@ const Users = (sequelize, DataTypes) => {
         super_user: {
           type: DataTypes.INTEGER(4),
           allowNull: false
+        },
+        associate: (models) => {
+          Users.hasOne(models.Transferencias, { foreingKey: 'users_id', as: 'usuario' })
         }
       },
       {
@@ -43,9 +46,7 @@ const Users = (sequelize, DataTypes) => {
         sync: {force: true},
       }
     )
-    Users.associate = function(models) {
-      Users.hasOne(models.Transferencias, { foreingKey: 'users_id', as: 'usuario' })
-    }
+    
     return users;
   }
   module.exports = Users;
