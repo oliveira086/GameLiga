@@ -44,7 +44,7 @@ const Users = (sequelize, DataTypes) => {
       }
     )
     Users.associate = (models) => {
-      Users.hasOne(models.Transferencias, { foreingKey: 'id', as: 'usuario' })
+      Users.hasOne(models.Transferencias, { foreingKey: 'users_id', as: 'usuario' })
     }
     return users;
   }
