@@ -9,14 +9,14 @@ const Transferencias = (sequelize, DataTypes) => {
         users_deb: {
           type: DataTypes.INTEGER,
           allowNull: true,
-          references: { model: 'users', key: 'id' },
+          references: { model: 'Users', key: 'users_deb' },
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',
         },
         users_cred: {
           type: DataTypes.INTEGER,
           allowNull: false,
-          references: { model: 'users', key: 'id' },
+          references: { model: 'Users', key: 'users_cred' },
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',
         }
@@ -27,8 +27,8 @@ const Transferencias = (sequelize, DataTypes) => {
       }
     )
     Transferencias.associate = (models) => {
-      Transferencias.belongsTo(models.Users, { foreignKey: 'users_deb'})
-      Transferencias.belongsTo(models.Users, { foreignKey: 'users_cred'})
+      Transferencias.belongsTo(models.Users, { foreignKey: 'users_deb' });
+      Transferencias.belongsTo(models.Users, { foreignKey: 'users_cred' });
     }
     return transferencias;
   }
