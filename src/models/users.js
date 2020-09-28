@@ -43,10 +43,7 @@ const Users = (sequelize, DataTypes) => {
       }
     )
     Users.associate = function(models) {
-      // associations can be defined here
-      Users.belongsToMany(models.Transferencias, {
-        through: 'user'
-      });
+      Users.hasOne(models.Transferencias, {as : 'users_id'})
     };
     return users;
   }
