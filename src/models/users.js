@@ -43,8 +43,8 @@ const Users = (sequelize, DataTypes) => {
       }
     )
     Users.associate = (models) => {
-      Users.hasOne(models.Transferencias, { foreignKey: 'users_deb' });
-      Users.hasMany(models.Transferencias, { foreignKey: 'users_cred' });
+      Users.hasOne(models.Transferencias, { foreignKey: 'id' });
+
     }
     
 
