@@ -19,8 +19,8 @@ const Transferencias = (sequelize, DataTypes) => {
       }
     )
     Transferencias.associate = (models) => {
-      Users.hasMany(models.Users, { as: 'users_deb'})
-      Users.hasMany(models.Users, { as: 'users_cred'})
+      Users.hasMany(models.Users, { as: 'usersteste'})
+      Users.hasMany(models.Users, { as: 'usersteste1'})
     }
     return transferencias;
   }
