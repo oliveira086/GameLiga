@@ -42,6 +42,12 @@ const Users = (sequelize, DataTypes) => {
         timestamps: true
       }
     )
+    Users.associate = (models) => {
+      Users.hasOne(models.Transferencias, { as: 'users_deb', foreignKey: 'id'});
+      Users.hasOne(models.Transferencias, { as: 'users_cred', foreignKey: 'id'});
+    }
+    
+
     return users;
   }
   module.exports = Users;
