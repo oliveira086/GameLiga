@@ -1,4 +1,4 @@
-const { sequelize, Atividades, Users} = require('../models');
+const { sequelize, Atividades, Users, Listas} = require('../models');
 const jwt = require('jsonwebtoken')
 
 const Trello = require('../../node_modules/trello-node-api')(process.env.TRELLO_API_KEY, process.env.TRELLO_TOKEN)
@@ -56,21 +56,31 @@ module.exports = {
                 req.email = decoded.email
             })
 
+            
+
             const user = await Users.findOne({
                 where:{
                     email: req.email
                 },
                 attributes: ['nome']
             })
+            
 
             if(user != null){
 
-                const estadoExist = await Atividades.findAll({
+                const atividadeExist = await Atividades.findAll({
                     where: {
                         nome: req.body.nome
                     }
                 })
-                if (estadoExist.length != 0) {
+
+                const todoListId = await Listas.findOne({
+                    where: {
+                        nome: 'Todo'
+                    }, attributes: ['id']
+                })
+
+                if (atividadeExist.length != 0) {
                     res.status(400).json({error: 'estado already exists'})
                 } else {
 
@@ -90,7 +100,7 @@ module.exports = {
                             valor: req.body.valor,
                             valor_inicio: req.body.valor_inicio,
                             valor_final: req.body.valor_final,
-                            estados_id: req.body.estados_id,
+                            listas_id: todoListId,
                             entrega: req.body.entrega,
                             trello_id: response.id
                         }

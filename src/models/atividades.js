@@ -33,10 +33,10 @@ const Atividades = (sequelize, DataTypes) => {
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',
         },
-        estados_id: {
+        listas_id: {
           type: DataTypes.INTEGER,
           allowNull: false,
-          references: { model: 'estados', key: 'id' },
+          references: { model: 'listas', key: 'id' },
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',
         }
