@@ -2,6 +2,12 @@ const Listas = (sequelize, DataTypes) => {
     let listas = sequelize.define(
       'Listas',
       {
+        id: {
+          type: DataTypes.INTEGER(11),
+          allowNull: false,
+          primaryKey: true,
+          autoIncrement: true
+        },
         nome: {
           type: DataTypes.STRING(80),
           allowNull: false

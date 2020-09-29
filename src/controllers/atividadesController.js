@@ -100,7 +100,7 @@ module.exports = {
                             valor: req.body.valor,
                             valor_inicio: req.body.valor_inicio,
                             valor_final: req.body.valor_final,
-                            listas_id: todoListId,
+                            listas_id: todoListId.id,
                             entrega: req.body.entrega,
                             trello_id: response.id
                         }
