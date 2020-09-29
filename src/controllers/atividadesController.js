@@ -24,10 +24,18 @@ module.exports = {
                 },
                 attributes: ['nome']
             })
+
+
+            const todoListId = await Listas.findOne({
+                where: {
+                     nome: 'Todo'
+                }, attributes: ['id']
+            })
+
             if(user != null){ 
                 const atividades = await Atividades.findAll({
                     where: {
-                        estados_id: 3,
+                        listas_id: todoListId.id,
                         users_id: null
                     }
                 })
