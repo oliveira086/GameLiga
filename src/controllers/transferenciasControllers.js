@@ -43,12 +43,12 @@ module.exports = {
                 if(contatos.length == 0){
                     bcrypt.compare(req.body.senha_confirmacao, user.senha_confirmacao, function(err, result) {
                         if(result){
-                            const transferenciaRealizada = await Transferencias.create(data)
+                            const transferenciaRealizada = Transferencias.create(data)
                             let dataContato = {
                                 users_agenda: data.user.id,
                                 users_id: req.body.users_cred
                             }
-                            const contatoSalvo = await Contatos.create(dataContato)
+                            const contatoSalvo = Contatos.create(dataContato)
 
                             res.status(200);
                             res.json({
