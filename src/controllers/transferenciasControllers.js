@@ -23,7 +23,7 @@ module.exports = {
                 where:{
                     email: req.email
                 },
-                attributes: ['nome', 'id', 'senha_confirmacao']
+                attributes: ['nome', 'id', 'senha_confirmacao', 'saldo']
             })
 
             if(user != null){
@@ -40,25 +40,94 @@ module.exports = {
                     }
                 })
 
+                const saldoUsuarioCredito = await Users.findOne({
+                    where: {
+                        id: req.body.users_cred
+                    }, attributes: ['saldo']
+                })
+
+                
+
                 if(contatos.length == 0){
                     bcrypt.compare(req.body.senha_confirmacao, user.senha_confirmacao, function(err, result) {
                         if(result){
                             const transferenciaRealizada = Transferencias.create(data)
+                            const debito = user.saldo - data.valor
+
+                            const debitoUser = Users.update({
+                                saldo: debito
+                            },{
+                                where: {
+                                    id: user.id
+                                }
+                            })
+
+                            
+                            let saldoCredito = parseInt(saldoUsuarioCredito.saldo) + parseInt(data.valor)
+                            const UsuarioComSaldo = Users.update({
+                                saldo: saldoCredito
+                            }, {
+                                where: {
+                                    id: data.users_cred
+                                }
+                            })
+
                             let dataContato = {
-                                users_agenda: data.user.id,
+                                users_agenda: user.id,
                                 users_id: req.body.users_cred
                             }
                             const contatoSalvo = Contatos.create(dataContato)
 
                             res.status(200);
                             res.json({
-                                transferenciaRealizada, contatoSalvo
+                                usuarioCredito: UsuarioComSaldo,
+                                usuarioDebito: debitoUser,
+                                transferencia: transferenciaRealizada, 
+                                contatos: contatoSalvo
+                            });
+                        } else {
+                            res.status(500);
+                            res.json({
+                                erro: 'password invalid'
                             });
                         }
                     })
                 } else {
-                    res.status(500);
-                    res.json({error: 'Contato exists'});
+                    bcrypt.compare(req.body.senha_confirmacao, user.senha_confirmacao, function(err, result) {
+                        if(result){
+                            const transferenciaRealizada = Transferencias.create(data)
+
+                            const debito = user.saldo - data.valor
+                            const debitoUser = Users.update({
+                                saldo: debito
+                            },{
+                                where: {
+                                    id: user.id
+                                }
+                            })
+
+                            let saldoCredito = parseInt(saldoUsuarioCredito.saldo) + parseInt(data.valor)
+                            const UsuarioComSaldo = Users.update({
+                                saldo: saldoCredito
+                            }, {
+                                where: {
+                                    id: data.users_cred
+                                }
+                            })
+
+                            res.status(200);
+                            res.json({
+                                UsuarioCredito: UsuarioComSaldo,
+                                usuarioDebito: debitoUser,
+                                transferencia: transferenciaRealizada
+                            });
+                        } else {
+                            res.status(500);
+                            res.json({
+                                erro: 'password invalid'
+                            });
+                        }
+                    })
                 }
             } else {
                 res.status(500);
