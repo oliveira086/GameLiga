@@ -10,7 +10,7 @@ module.exports = {
             const userExist = await Users.findOne({
                 where: {
                     email: req.body.email
-                }, attributes: ['saldo', 'senha']
+                }, attributes: ['saldo', 'senha', 'email']
             })
 
             if (!userExist) {

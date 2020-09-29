@@ -11,7 +11,7 @@ module.exports = {
             if(!token) {
                 res.status(401).json({error: 'token not declared'})
             }
-            jwt.verify(token, process.env.SECRET_KEY, (error,decoded)=> {
+            jwt.verify(token, process.env.SECRET_KEY, (error,decoded) => {
                 if(error){
                     res.status(401).json({error: 'token invalid'})
                 }
@@ -28,7 +28,6 @@ module.exports = {
                 res.status(200).json(user);
             } else {
                 res.status(400).json({ error: 'user not found' });
-                res.send(user)
             }
         }
         catch (error) {
