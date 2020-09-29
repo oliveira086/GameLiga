@@ -113,15 +113,12 @@ module.exports = {
                 req.email = decoded.email
             })
 
-            
-
             const user = await Users.findOne({
                 where:{
                     email: req.email
                 },
                 attributes: ['nome']
             })
-            
 
             if(user != null){
 
@@ -352,5 +349,97 @@ module.exports = {
             res.json({error: 'internal error'});
         }
     },
+
+    async changeList(req, res, next){
+        try {
+
+            const token = req.body.token;
+            if(!token) {
+                res.status(401).json({error: 'token not declared'})
+            }
+            jwt.verify(token, process.env.SECRET_KEY, (error,decoded)=> {
+                if(error){
+                    res.status(401).json({error: 'token invalid'})
+                }
+                req.email = decoded.email
+            })
+
+            const user = await Users.findOne({
+                where:{
+                    email: req.email
+                },
+                attributes: ['id']
+            })
+
+            if(user != null){
+                let idAtividade = req.body.id_atividade
+
+                let idListaAtividade = await Atividades.findOne({
+                    include: [{
+                        model: Listas, as: 'lista_id',
+                        attributes: ['nome']
+                    }],
+                    where: {
+                        id: idAtividade
+                    }
+                })
+
+                res.status(200).json(idListaAtividade);
+
+                let valorListaAtual = ''
+
+                switch(idListaAtividade.lista_id.nome){
+                    case 'Todo':
+                        valorListaAtual = 'Sprint'
+                        break
+                    case 'Sprint':
+                        valorListaAtual = 'In Progress'
+                        break
+                    case 'In Progress':
+                        valorListaAtual = 'Done'
+                        break
+                }
+
+                const listId = await Listas.findOne({
+                    where: {
+                        nome: valorListaAtual
+                    }
+                })
+
+                let dataTrello = {
+                    idList: listId.id_coluna,
+                }
+
+
+                Trello.card.update(idListaAtividade.trello_id, dataTrello).then(async function (response) {
+                    
+                    const updateAtividade = Atividades.update({
+                        listas_id: listId.id
+                    }, {
+                        where: {
+                            id: idAtividade
+                        }
+                    })
+
+                    res.status(200).json(updateAtividade);
+                }).
+                catch(function (error) {
+                     console.log('error', error);
+                });
+
+
+
+                
+
+                res.status(200).json({error: listId})
+
+            }
+
+        } catch (error){
+            console.log(error)
+            res.status(500);
+            res.json({error: 'internal error'});
+        }
+    }
 
 }
