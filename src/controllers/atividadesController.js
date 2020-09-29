@@ -225,11 +225,34 @@ module.exports = {
                 where:{
                     email: req.email
                 },
-                attributes: ['nome']
+                attributes: ['nome', 'id', 'saldo']
             })
             if(user != null){
 
-                console.log(JSON.stringify(req.body))
+                const debito = parseInt(user.saldo) - parseInt(req.body.valor_inicio)
+
+                const debitoUser = Users.update({
+                    saldo: debito
+                },{
+                    where: {
+                    id: user.id
+                    }
+                })
+
+                const saldoUsuarioCredito = await Users.findOne({
+                    where: {
+                        email: 'andreluisoliveira013@gmail.com',
+                    }, attributes: ['saldo', 'id']
+                })
+
+                let saldoCredito = parseInt(saldoUsuarioCredito.saldo) + parseInt(data.valor)
+                const UsuarioComSaldo = Users.update({
+                    saldo: saldoCredito
+                }, {
+                    where: {
+                        id: saldoUsuarioCredito.id
+                    }
+                })
 
                 var id = req.body.id_trello_atividade; // REQUIRED
                 let id_trello_users = req.body.id_trello_users
