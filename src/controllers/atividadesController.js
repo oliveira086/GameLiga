@@ -30,7 +30,7 @@ module.exports = {
 
             const todoListId = await Listas.findOne({
                 where: {
-                     nome: 'Todo'
+                     nome: 'Sprint'
                 }, attributes: ['id']
             })
 
@@ -230,12 +230,8 @@ module.exports = {
                 attributes: ['nome', 'id', 'saldo', 'senha_confirmacao']
             })
 
-            
-
             if(user != null){
 
-
-                
 
                 bcrypt.compare(req.body.senha_confirmacao, user.senha_confirmacao, async function(err, result) {
                     if(result){
