@@ -46,6 +46,10 @@ const Atividades = (sequelize, DataTypes) => {
         timestamps: true
       }
     )
+    atividades.associate = function(models){
+      atividades.belongsTo(models.Listas, {foreignKey: 'listas_id', as:'lista_id' })
+      atividades.belongsTo(models.Users, {foreignKey: 'users_id', as: 'user_id'})
+    }
     return atividades;
   }
   module.exports = Atividades;
