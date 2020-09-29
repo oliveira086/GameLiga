@@ -1,5 +1,6 @@
 const { sequelize, Atividades, Users, Listas} = require('../models');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt-nodejs');
 
 const Trello = require('../../node_modules/trello-node-api')(process.env.TRELLO_API_KEY, process.env.TRELLO_TOKEN)
 
@@ -221,6 +222,8 @@ module.exports = {
                 req.email = decoded.email
             })
 
+            
+
             const user = await Users.findOne({
                 where:{
                     email: req.email
@@ -228,71 +231,72 @@ module.exports = {
                 attributes: ['nome', 'id', 'saldo', 'senha_confirmacao']
             })
 
+            
+
             if(user != null){
-                bcrypt.compare(req.body.senha_confirmacao, user.senha_confirmacao, function(err, result) {
 
-                    if(result){
-
-                        const debito = parseInt(user.saldo) - parseInt(req.body.valor_inicio)
-                        const debitoUser = Users.update({
-                            saldo: debito
-                        },{
-                            where: {
-                            id: user.id
-                        }})
-
-                        const saldoUsuarioCredito = Users.findOne({
-                            where: {
-                                email: 'andreluisoliveira013@gmail.com',
-                            }, attributes: ['saldo', 'id']
-                        })
-    
-                        let saldoCredito = parseInt(saldoUsuarioCredito.saldo) + parseInt(req.body.valor_inicio)
-                        const UsuarioComSaldo = Users.update({
-                            saldo: saldoCredito
-                        }, {
-                            where: {
-                                id: saldoUsuarioCredito.id
-                            }
-                        })
-
-                        let data = {
-                            users_cred: saldoUsuarioCredito.id,
-                            users_deb: user.id,
-                            valor: req.body.valor_inicio
-                        }
-        
-                        const transferenciaRealizada = Transferencias.create(data)
-    
-                        var id = req.body.id_trello_atividade; // REQUIRED
-                        let id_trello_users = req.body.id_trello_users
-        
-                        var dataTrello = {
-                            idMembers: `${id_trello_users}`,
-                        };
-
-                        Trello.card.update(id, dataTrello).then(function (response) {
-                            let dataTrello = {
-                                users_id: req.body.users_id
-                            }
-                            const atividades = Atividades.update(dataTrello ,{
-                                where: {
-                                    id: req.body.id_atividade
-                                }
-                            })
-                            res.status(200).json(atividades, transferenciaRealizada);
-                        }).
-                        catch(function (error) {
-                             console.log('error', error);
-                        });
-                    }
-                    else {
-                        res.status(400).json({ error: 'password not found' });
-                    }
+                const comparandoSenhas = bcrypt.compare(req.body.senha_confirmacao, user.senha_confirmacao, function(err, result) {
+                    return result
                 })
-            } else {
-                res.status(400).json({ error: 'user not found' });
-            }
+
+                if(comparandoSenhas){
+                    const debito = parseInt(user.saldo) - parseInt(req.body.valor_inicio)
+                    const debitoUser = Users.update({
+                        saldo: debito
+                    },{
+                        where: {
+                        id: user.id
+                    }})
+
+                    const saldoUsuarioCredito = Users.findOne({
+                        where: {
+                            email: 'andreluisoliveira013@gmail.com',
+                        }, attributes: ['saldo', 'id']
+                    })
+
+                    let saldoCredito = parseInt(saldoUsuarioCredito.saldo) + parseInt(req.body.valor_inicio)
+                    const UsuarioComSaldo = Users.update({
+                        saldo: saldoCredito
+                    }, {
+                        where: {
+                            id: saldoUsuarioCredito.id
+                        }
+                    })
+
+                    let data = {
+                        users_cred: saldoUsuarioCredito.id,
+                        users_deb: user.id,
+                        valor: req.body.valor_inicio
+                    }
+
+                    const transferenciaRealizada = Transferencias.create(data)
+    
+                    var id = req.body.id_trello_atividade; // REQUIRED
+                    let id_trello_users = req.body.id_trello_users
+        
+                    var dataTrello = {
+                        idMembers: `${id_trello_users}`,
+                    };
+
+                    Trello.card.update(id, dataTrello).then(function (response) {
+                        let dataTrello = {
+                            users_id: req.body.users_id
+                        }
+                        const atividades = Atividades.update(dataTrello ,{
+                            where: {
+                                id: req.body.id_atividade
+                            }
+                        })
+                        res.status(200).json(atividades, transferenciaRealizada);
+                    }).
+                    catch(function (error) {
+                         console.log('error', error);
+                    });
+                }
+
+                } else {
+                    res.status(200).json({erro: 'nao foi'})
+                }
         }
         catch (error) {
             console.log(error)
