@@ -241,7 +241,7 @@ module.exports = {
                             id: user.id
                         }})
 
-                        const saldoUsuarioCredito = await Users.findOne({
+                        const saldoUsuarioCredito = Users.findOne({
                             where: {
                                 email: 'andreluisoliveira013@gmail.com',
                             }, attributes: ['saldo', 'id']
