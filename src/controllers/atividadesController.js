@@ -245,7 +245,7 @@ module.exports = {
                     }, attributes: ['saldo', 'id']
                 })
 
-                let saldoCredito = parseInt(saldoUsuarioCredito.saldo) + parseInt(data.valor)
+                let saldoCredito = parseInt(saldoUsuarioCredito.saldo) + parseInt(req.body.valor_inicio)
                 const UsuarioComSaldo = Users.update({
                     saldo: saldoCredito
                 }, {
@@ -253,6 +253,14 @@ module.exports = {
                         id: saldoUsuarioCredito.id
                     }
                 })
+
+                let data = {
+                    users_cred: saldoUsuarioCredito.id,
+                    users_deb: user.id,
+                    valor: req.body.valor_inicio
+                }
+
+                const transferenciaRealizada = Transferencias.create(data)
 
                 var id = req.body.id_trello_atividade; // REQUIRED
                 let id_trello_users = req.body.id_trello_users
