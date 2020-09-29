@@ -1,6 +1,7 @@
-const { sequelize, Atividades, Users, Listas} = require('../models');
+const { sequelize, Atividades, Users, Listas, Transferencias} = require('../models');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt-nodejs');
+const { use } = require('../routes');
 
 const Trello = require('../../node_modules/trello-node-api')(process.env.TRELLO_API_KEY, process.env.TRELLO_TOKEN)
 
@@ -222,8 +223,6 @@ module.exports = {
                 req.email = decoded.email
             })
 
-            
-
             const user = await Users.findOne({
                 where:{
                     email: req.email
@@ -235,64 +234,70 @@ module.exports = {
 
             if(user != null){
 
-                const comparandoSenhas = bcrypt.compare(req.body.senha_confirmacao, user.senha_confirmacao, function(err, result) {
-                    return result
-                })
 
-                if(comparandoSenhas){
-                    const debito = parseInt(user.saldo) - parseInt(req.body.valor_inicio)
-                    const debitoUser = Users.update({
-                        saldo: debito
-                    },{
-                        where: {
-                        id: user.id
-                    }})
+                
 
-                    const saldoUsuarioCredito = Users.findOne({
-                        where: {
-                            email: 'andreluisoliveira013@gmail.com',
-                        }, attributes: ['saldo', 'id']
-                    })
+                bcrypt.compare(req.body.senha_confirmacao, user.senha_confirmacao, async function(err, result) {
+                    if(result){
 
-                    let saldoCredito = parseInt(saldoUsuarioCredito.saldo) + parseInt(req.body.valor_inicio)
-                    const UsuarioComSaldo = Users.update({
-                        saldo: saldoCredito
-                    }, {
-                        where: {
-                            id: saldoUsuarioCredito.id
-                        }
-                    })
-
-                    let data = {
-                        users_cred: saldoUsuarioCredito.id,
-                        users_deb: user.id,
-                        valor: req.body.valor_inicio
-                    }
-
-                    const transferenciaRealizada = Transferencias.create(data)
-    
-                    var id = req.body.id_trello_atividade; // REQUIRED
-                    let id_trello_users = req.body.id_trello_users
-        
-                    var dataTrello = {
-                        idMembers: `${id_trello_users}`,
-                    };
-
-                    Trello.card.update(id, dataTrello).then(function (response) {
-                        let dataTrello = {
-                            users_id: req.body.users_id
-                        }
-                        const atividades = Atividades.update(dataTrello ,{
+                        const saldoUsuarioCredito = await Users.findOne({
                             where: {
-                                id: req.body.id_atividade
+                                email: 'andreluisoliveira013@gmail.com',
+                            }, attributes: ['saldo', 'id']
+                        })
+                
+                        const debito = parseInt(user.saldo) - parseInt(req.body.valor_inicio)
+                        const debitoUser = await Users.update({
+                            saldo: debito
+                        },{
+                            where: {
+                            id: user.id
+                        }})
+    
+                        let saldoCredito = parseInt(saldoUsuarioCredito.saldo) + parseInt(req.body.valor_inicio)
+                        const UsuarioComSaldo = await Users.update({
+                            saldo: saldoCredito
+                        }, {
+                            where: {
+                                id: saldoUsuarioCredito.id
                             }
                         })
-                        res.status(200).json(atividades, transferenciaRealizada);
-                    }).
-                    catch(function (error) {
-                         console.log('error', error);
-                    });
-                }
+    
+                        let data = {
+                            users_cred: saldoUsuarioCredito.id,
+                            users_deb: user.id,
+                            valor: req.body.valor_inicio
+                        }
+    
+                        const transferenciaRealizada = await Transferencias.create(data)
+        
+                        var id = req.body.id_trello_atividade; // REQUIRED
+                        let id_trello_users = req.body.id_trello_users
+            
+                        var dataTrello = {
+                            idMembers: `${id_trello_users}`,
+                        };
+    
+                        Trello.card.update(id, dataTrello).then(async function (response) {
+                            let dataTrello = {
+                                users_id: req.body.users_id
+                            }
+                            const atividades = await Atividades.update(dataTrello ,{
+                                where: {
+                                    id: req.body.id_atividade
+                                }
+                            })
+                            res.status(200).json(atividades, transferenciaRealizada);
+                        }).
+                        catch(function (error) {
+                             console.log('error', error);
+                        });
+
+                        res.status(200).json({ok: 'Buy task'});
+                    }
+                })
+
+                
 
                 } else {
                     res.status(200).json({erro: 'nao foi'})
