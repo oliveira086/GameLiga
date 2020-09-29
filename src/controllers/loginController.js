@@ -5,13 +5,12 @@ const bcrypt = require('bcrypt-nodejs');
 module.exports = {
 
     async login(req, res, next) {
-        console.log('ok')
         try {
 
             const userExist = await Users.findOne({
                 where: {
                     email: req.body.email
-                }
+                }, attributes: ['saldo', 'senha']
             })
 
             if (!userExist) {
@@ -25,8 +24,9 @@ module.exports = {
                         userExist.last_login = dateNow.toISOString()
                         userExist.save()
                         const token = generateToken(userExist.email)
+                        let saldo = userExist.saldo
                         res.status(200)
-                        res.json({token});
+                        res.json({token, saldo});
                     }
                     else {
                         res.status(400).json({error: 'invalid password'})
