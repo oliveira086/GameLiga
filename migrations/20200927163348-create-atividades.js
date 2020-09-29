@@ -48,10 +48,10 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      estados_id: {
+      listas_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
-        references: { model: 'estados', key: 'id'},
+        references: { model: 'listas', key: 'id'},
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },

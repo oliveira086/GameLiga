@@ -48,7 +48,6 @@ const Atividades = (sequelize, DataTypes) => {
     )
     atividades.associate = (models) => {
         atividades.belongsTo(models.Users, {foreignKey: 'users_id', as: 'users'})
-        atividades.belongsTo(models.Estados, {foreignKey: 'estados_id', as: 'estados'})
     };
     return atividades;
   }

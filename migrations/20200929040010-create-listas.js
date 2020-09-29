@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable('estados', {
+    return queryInterface.createTable('listas', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -13,8 +13,8 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      visivel: {
-        type: Sequelize.INTEGER,
+      id_coluna: {
+        type: Sequelize.STRING(80),
         allowNull: false
       },
       created_at: {
@@ -29,6 +29,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('estados')
+    return queryInterface.dropTable('listas')
   }
 };
