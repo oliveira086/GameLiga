@@ -7,6 +7,53 @@ const Trello = require('../../node_modules/trello-node-api')(process.env.TRELLO_
 
 
 module.exports = {
+    async getAtividadesTodo(req, res, next){
+        try {
+
+            const token = req.body.token;
+            if(!token) {
+                res.status(401).json({error: 'token not declared'})
+            }
+            jwt.verify(token, process.env.SECRET_KEY, (error,decoded)=> {
+                if(error){
+                    res.status(401).json({error: 'token invalid'})
+                }
+                req.email = decoded.email
+            })
+
+            const user = await Users.findOne({
+                where:{
+                    email: req.email
+                },
+                attributes: ['nome', 'super_user']
+            })
+
+            const todoListId = await Listas.findOne({
+                where: {
+                     nome: 'Todo'
+                }, attributes: ['id']
+            })
+
+            if(user != null && user.super_user == 1){
+                const atividades = await Atividades.findAll({
+                    where: {
+                        listas_id: todoListId.id,
+                        users_id: null
+                    }
+                })
+                res.status(200).json(atividades);
+            } else {
+                res.status(500);
+                res.json({error: 'user not found'});
+            }
+
+        } catch (error){
+            console.log(error)
+            res.status(500);
+            res.json({error: 'internal error'});
+        }
+
+    },
     async getAtividades(req, res, next) {
         try {
             const token = req.body.token;
@@ -28,7 +75,7 @@ module.exports = {
             })
 
 
-            const todoListId = await Listas.findOne({
+            const SprintList = await Listas.findOne({
                 where: {
                      nome: 'Sprint'
                 }, attributes: ['id']
@@ -37,7 +84,7 @@ module.exports = {
             if(user != null){ 
                 const atividades = await Atividades.findAll({
                     where: {
-                        listas_id: todoListId.id,
+                        listas_id: SprintList.id,
                         users_id: null
                     }
                 })

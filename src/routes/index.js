@@ -13,6 +13,7 @@ router.get('/', function(req, res, next) {
 router.post('/createListas', listasController.createListas)
 
 router.post('/getAtividades', atividadesController.getAtividades)
+router.post('/getAtividadesTodo', atividadesController.getAtividadesTodo)
 router.post('/getAtividadesUser', atividadesController.getAtividadesUser)
 router.post('/createAtividades', atividadesController.createAtividade)
 router.post('/deleteAtividades', atividadesController.deleteAtividade)
