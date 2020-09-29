@@ -52,7 +52,7 @@ module.exports = {
                     bcrypt.compare(req.body.senha_confirmacao, user.senha_confirmacao, function(err, result) {
                         if(result){
                             const transferenciaRealizada = Transferencias.create(data)
-                            const debito = user.saldo - data.valor
+                            const debito = parseInt(user.saldo) - parseInt(data.valor)
 
                             const debitoUser = Users.update({
                                 saldo: debito
@@ -97,7 +97,7 @@ module.exports = {
                         if(result){
                             const transferenciaRealizada = Transferencias.create(data)
 
-                            const debito = user.saldo - data.valor
+                            const debito = parseInt(user.saldo) - parseInt(data.valor)
                             const debitoUser = Users.update({
                                 saldo: debito
                             },{
