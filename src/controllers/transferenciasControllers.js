@@ -1,6 +1,7 @@
 const {Users, Transferencias, Contatos } = require('../models');
 const sequelize = require('sequelize');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt-nodejs');
 const Op = sequelize.Op;
 
 module.exports = {
@@ -22,7 +23,7 @@ module.exports = {
                 where:{
                     email: req.email
                 },
-                attributes: ['nome', 'id']
+                attributes: ['nome', 'id', 'senha_confirmacao']
             })
 
             if(user != null){
@@ -40,17 +41,21 @@ module.exports = {
                 })
 
                 if(contatos.length == 0){
-                    const transferenciaRealizada = await Transferencias.create(data)
-                    let dataContato = {
-                        users_agenda: data.user.id,
-                        users_id: req.body.users_cred
-                    }
-                    const contatoSalvo = await Contatos.create(dataContato)
+                    bcrypt.compare(req.body.senha_confirmacao, user.senha_confirmacao, function(err, result) {
+                        if(result){
+                            const transferenciaRealizada = await Transferencias.create(data)
+                            let dataContato = {
+                                users_agenda: data.user.id,
+                                users_id: req.body.users_cred
+                            }
+                            const contatoSalvo = await Contatos.create(dataContato)
 
-                    res.status(200);
-                    res.json({
-                        transferenciaRealizada, contatoSalvo
-                    });
+                            res.status(200);
+                            res.json({
+                                transferenciaRealizada, contatoSalvo
+                            });
+                        }
+                    })
                 } else {
                     res.status(500);
                     res.json({error: 'Contato exists'});
