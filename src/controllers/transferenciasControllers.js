@@ -22,13 +22,13 @@ module.exports = {
                 where:{
                     email: req.email
                 },
-                attributes: ['nome']
+                attributes: ['nome', 'id']
             })
 
             if(user != null){
                 let data = {
                     users_cred: req.body.users_cred,
-                    users_deb: req.body.users_deb,
+                    users_deb: user.id,
                     valor: req.body.valor
                 }
 
@@ -40,15 +40,13 @@ module.exports = {
                 })
 
                 if(contatos.length == 0){
-                    console.log('PASSEI')
                     const transferenciaRealizada = await Transferencias.create(data)
                     let dataContato = {
-                        users_agenda: data.users_deb,
+                        users_agenda: data.user.id,
                         users_id: req.body.users_cred
                     }
                     const contatoSalvo = await Contatos.create(dataContato)
 
-                    //Postagem.findByPk(post_id)
                     res.status(200);
                     res.json({
                         transferenciaRealizada, contatoSalvo
