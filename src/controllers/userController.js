@@ -134,7 +134,7 @@ module.exports = {
                 where:{
                     email: req.body.email
                 },
-                attributes: ['nome']
+                attributes: ['nome', 'id']
             })
             if(user != null){
                 let email = await Users.findOne({
