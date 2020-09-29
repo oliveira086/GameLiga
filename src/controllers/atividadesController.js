@@ -227,6 +227,7 @@ module.exports = {
                 },
                 attributes: ['nome', 'id', 'saldo']
             })
+
             if(user != null){
 
                 const debito = parseInt(user.saldo) - parseInt(req.body.valor_inicio)
@@ -270,15 +271,15 @@ module.exports = {
                 };
 
                 Trello.card.update(id, dataTrello).then(function (response) {
-                    let data = {
+                    let dataTrello = {
                         users_id: req.body.users_id
                     }
-                    const atividades = Atividades.update(data ,{
+                    const atividades = Atividades.update(dataTrello ,{
                         where: {
                             id: req.body.id_atividade
                         }
                     })
-                    res.status(200).json(atividades);
+                    res.status(200).json(atividades, transferenciaRealizada);
                 }).catch(function (error) {
                      console.log('error', error);
                 });
