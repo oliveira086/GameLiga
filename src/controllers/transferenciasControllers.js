@@ -230,6 +230,52 @@ module.exports = {
             res.status(500);
             res.json({error: 'internal error'});
         }
+    },
+    
+    async getLatest (req, res, next) {
+        const token = req.body.token;
+            if(!token) {
+                res.status(401).json({error: 'token not declared'})
+            }
+            jwt.verify(token, process.env.SECRET_KEY, (error,decoded)=> {
+                if(error){
+                    res.status(401).json({error: 'token invalid'})
+                }
+                req.email = decoded.email
+            })
+
+            const user = await Users.findOne({
+                where:{
+                    email: req.email
+                },
+                attributes: ['id']
+            })
+
+            if(user != null){
+
+                const transferencias = await Transferencias.findAll({
+                    limit: 1,
+                    order: [ [ 'createdAt', 'DESC' ]],
+                    where: {
+                        [Op.or]: [{users_deb: user.id}, {users_cred: user.id}]
+                    },
+                    include: [{
+                        model: Users, as: 'usuario_deb',
+                        attributes: ['nome']
+                    },
+                    {
+                        model: Users, as: 'usuario_cred',
+                        attributes: ['nome']
+                    }],
+                })
+
+                
+                res.status(200).json({data: transferencias})
+               
+
+
+               
+            }
     }
 
 }
