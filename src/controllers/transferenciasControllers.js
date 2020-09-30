@@ -279,7 +279,7 @@ module.exports = {
                         usuario_cred: transferencias[0].usuario_cred,
                         usuario_deb: transferencias[0].usuario_deb,
                         valor: transferencias[0].valor,
-                        tipo: 'debito',
+                        debito: true,
                     }
                     res.status(200).json({data: data})
                 } else {
@@ -292,7 +292,7 @@ module.exports = {
                         usuario_cred: transferencias[0].usuario_cred,
                         usuario_deb: transferencias[0].usuario_deb,
                         valor: transferencias[0].valor,
-                        tipo: 'credito',
+                        debito: false,
                     }
 
                     res.status(200).json({data: data})
