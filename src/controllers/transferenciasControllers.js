@@ -269,8 +269,37 @@ module.exports = {
                     }],
                 })
 
+                if(transferencias[0].users_deb == user.id){
+                    let data = {
+                        createdAt: transferencias[0].createdAt,
+                        id: transferencias[0].id,
+                        updatedAt: transferencias[0].updatedAt,
+                        users_cred: transferencias[0].users_cred,
+                        users_deb: transferencias[0].users_deb,
+                        usuario_cred: transferencias[0].usuario_cred,
+                        usuario_deb: transferencias[0].usuario_deb,
+                        valor: transferencias[0].valor,
+                        tipo: 'debito',
+                    }
+                    res.status(200).json({data: data})
+                } else {
+                    let data = {
+                        createdAt: transferencias[0].createdAt,
+                        id: transferencias[0].id,
+                        updatedAt: transferencias[0].updatedAt,
+                        users_cred: transferencias[0].users_cred,
+                        users_deb: transferencias[0].users_deb,
+                        usuario_cred: transferencias[0].usuario_cred,
+                        usuario_deb: transferencias[0].usuario_deb,
+                        valor: transferencias[0].valor,
+                        tipo: 'credito',
+                    }
+
+                    res.status(200).json({data: data})
+                }
+
                 
-                res.status(200).json({data: transferencias})
+                
                
 
 
