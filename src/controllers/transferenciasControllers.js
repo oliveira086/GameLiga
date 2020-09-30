@@ -295,7 +295,7 @@ module.exports = {
                         debito: false,
                     }
 
-                    res.status(200).json({data: data})
+                    res.status(200).json({data})
                 }
 
                 
